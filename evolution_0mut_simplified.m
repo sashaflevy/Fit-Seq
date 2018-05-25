@@ -1,33 +1,48 @@
 function [ file_name ] = evolution_0mut_simplified(lineage, t_evo, ...
-    cell_num_ini, x_ini, noise_option, varargin)
+cell_num_ini, x_ini, noise_option, varargin)
 % -------------------------------------------------------------------------
 % evolution_0mut_simplified
-% SIMPLIFIED VERSION OF SIMULATED COMPETETIVE POOLED GROWTH OF A POPULATION OF 
-% GENOTYPES WITH DIFFERENT FITNESSES. [DEFINE WHAT MAKES THIS SIMPLIFIED] 
+% SIMPLIFIED VERSION OF SIMULATED COMPETETIVE POOLED GROWTH OF A POPULATION 
+% OF GENOTYPES WITH DIFFERENT FITNESSES, WHICH ONLY INCLUDE GROWTH NOISE.
+%
 %
 % INPUTS
 % -- lineage: number of genotypes of the population
+%
 % -- t_evo: total number of growth generations
-% -- cell_num_ini: vector of the initial cell number of each genotype at the 0-th
-%                  generation
-% -- x_ini: vector of the fitness of each genotype
+%
+% -- cell_num_ini: a vector of initial cell number of each genotype at the 0-th
+%                  generation,
+%                  size = lineage * 1
+%
+% -- x_ini: a vector of the fitness of each genotype,
+%           size = lineage * 1
+%
 % -- noise_option: options of whether cell growth noise is simulated, 
-%                  logical (0-1) scaler value
-% -- 'format': optional, file format of outputs, 'csv'(default) or 'mat'
+%                  logical (0-1) scaler value, 
+%                  1 means that the cell growth noise is included
+%                  0 means that the cell growth noise is not included
+%
+% -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
+%
 %
 % OUTPUTS
-% -- file_name: name of the file generated [WHAT IS OUTPUT TO THIS FILE?]
+% -- file_name: the name of the file generated,
+%               'data_evo_simu_0mut_simplified_********-*********.mat' 
+%               when 'format' is set to be 'mat', and 
+%               'data_evo_simu_0mut_simplified_********-*********.csv'
+%               when 'format' is set to be 'csv'
+%
 % -------------------------------------------------------------------------
-
-% Parse inputs
+% Parse inputs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 numvarargs = length(varargin);
 if numvarargs > 2
-    error('evolution_0mut_complex:TooManyInputs', ...
+    error('evolution_0mut_simplified:TooManyInputs', ...
         'requires at most 1 optional inputs');
 end
-optargs = {'format', 'csv'};
-optargs(1:numvarargs) = varargin;
-ouptput_format = optargs{2};
+vararg_update = {'format', 'csv'};
+vararg_update(1:numvarargs) = varargin;
+ouptput_format = vararg_update{2};
 
 noise_growth = noise_option;
 
@@ -37,7 +52,10 @@ x_mean = nan(1,t_evo+1);
 x_mean(1) = cell_num_ini'*x_ini/sum(cell_num_ini);
 
 
-% Simulate Pooled growth [CAN YOU GIVE A FEW MORE DESCRIPTIONS THROUGHOUT?]
+% Simulate pooled growth %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Step 1: Growth regime under two different conditions, that is, 
+%         1. Without growth noise
+%         2. With growth noise
 tstart0 = tic;
 if noise_growth == 0  
     for j = 2:(t_evo+1)
@@ -65,7 +83,10 @@ end
 effective_cell_depth = sum(cell_num_evo);
 telaps0=toc(tstart0);
 fprintf('Computing time for %i generations: %f seconds.\n', t_evo, telaps0)
+% End of the main function %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+
+% Report Results %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 dt = datestr(now,'yyyymmdd-HHMMSSFFF');
 switch lower(ouptput_format)
     case {'mat'}
@@ -106,6 +127,6 @@ switch lower(ouptput_format)
             fprintf(fileID,'%f\n', output_parameters{k3+1,2});
         end
         fclose(fileID);
-        file_name = ['data_evo_simu_0mut_simplified_' dt];
+        file_name = ['data_evo_simu_0mut_simplified_' dt '.csv'];
 end
-return
+end
