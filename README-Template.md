@@ -36,15 +36,45 @@ End with an example of getting some data out of the system or using it for a lit
 
 Explain how to run the automated tests for this system
 
-### Break down into end to end tests
+### Pooled growth simulation
+A numerical simulation framework is developed to simulate the competitive pooled cell growth of a population of genotypes with different fitnesses, and includes all sources of experimental noise, such as growth noise, sampling during bottlenecks, DNA extraction, PCR, and sampling on the sequencer. The simulation is performed in MATLAB using “evolution_0mut_complex.m”.
 
-Explain what these tests test and why
+
+#### Inputs
+-- lineage: number of genotypes of the population
+
+-- t_evo: total number of growth generations
+
+-- cell_num_ini: a vector of initial cell number of each genotype at the 0-th generation, size = lineage * 1
+
+-- x_ini: a vector of the fitness of each genotype, size = lineage * 1
+
+-- deltat: number of generations between successive cell transfers
+
+-- read_depth_average: average number of reads per genotype per sequencing time point
+
+-- noise_option: a vector of options of whether five types of noise, cell growth, cell transfer at the bottleneck, DNA extraction, PCR, and sequencing (in that order in the vector) are simulated, size = 1 * 5, 1 means the noise is included and 0 means the noise is not included.
+
+-- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
+
+#### Outputs
+-- file_name: name of the file generated, the standard file generated 'data_evo_simu_0mut_complex_********-*********.mat' when 'format' is set to be 'mat', and 'data_evo_simu_0mut_complex_********-*********.csv' when 'format' is set to be 'csv'
 
 ```
-Give an example
+lineage = 1e4;
+t_evo = 24;
+cell_num_ini = 1e2*ones(lineage,1);  
+x_ini = random('Normal',0,0.15, [lineage,1]);  % Gaussian distribution with mean = 0 and standard devistion = 0.15 in this example
+read_depth_average = 100;  
+deltat = 8;  
+noise_option = [1,1,1,1,1];  % All five types of noise (cell growth, bottleneck cell transfer, DNA extraction, PCR, sequencing) are simulated in this example.
+
+[ file_name ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, x_ini, noise_option);
 ```
 
-### And coding style tests
+#### Complex version
+
+### Fitness estimation using Fit-Seq
 
 Explain what these tests test and why
 
