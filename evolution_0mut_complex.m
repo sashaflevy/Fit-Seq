@@ -1,39 +1,77 @@
 function [ file_name ] = evolution_0mut_complex(lineage, t_evo, ...
-    cell_num_ini, x_ini, deltat, read_depth_average, noise_option, ...
-    varargin)
+    cell_num_ini, x_ini, deltat, read_depth_average, noise_option, varargin)
 % -------------------------------------------------------------------------
 % evolution_0mut_completed
 % COMPLEX VERSION OF SIMULATED COMPETETIVE POOLED GROWTH OF A POPULATION OF 
-% GENOTYPES WITH DIFFERENT FITNESSES [DEFINE WHAT MAKES THIS COMPLEX]
+% GENOTYPES WITH DIFFERENT FITNESSES, WHICH INCLUDE EXPERIMENTAL NOISE SUCH
+% AS GROWTH NOISE, SAMPLING DURING BOTTLENECKS, DNA EXTRACTION, PCR, AND
+% SAMPLING ON SEQUENCER. 
+%
 %
 % INPUTS
 % -- lineage: number of genotypes of the population
+%
 % -- t_evo: total number of growth generations
-% -- cell_num_ini: vector of initial cell number of each genotype at the 0-th
-%                  generation
-% -- x_ini: vector of the fitness of each genotype
-% -- deltat: number of generations between successive cell transfers
-% -- read_depth_average: average read number of reads per genotype per sequencing
+%
+% -- cell_num_ini: a vector of initial cell number of each genotype at the 0-th
+%                  generation,
+%                  size = lineage * 1
+%
+% -- x_ini: a vector of the fitness of each genotype,
+%           size = lineage * 1
+%
+% -- deltat: number of generations between two successive cell transfers
+%
+% -- read_depth_average: average read number of reads per genotype per
+%                        sequencing time point
+
+% -- cell_num_ini: a vector of initial cell number of every genotype at the 
+%                  0-th generation, 
+%                  size = lineage * 1
+%
+% -- x_ini: a vector of fitness of every genotype, 
+%           size = lineage * 1
+%
+% -- deltat: uumber of generations between successive cell transfer
+%
+% -- read_depth_average: average read number of a genotype per sequencing
 %                        time point
-% -- noise_option: options of whether five types of noise (cell growth,
-%                  bottleneck transfer, DNA extraction, PCR, sequencing)
-%                  are simulated, 1*5 logical (0-1) vector [EXPLAIN WHAT HAPPENS IN THE CASE OF A 0 OR 1]
+%
+% -- noise_option: a vector of options of whether five types of noise 
+%                  (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing)
+%                  are simulated, 
+%                  size = 1*5 logical (0-1) vector, 
+%                  1 for the first element means that the cell growth noise is included
+%                  0 for the first element means that the cell growth noise is not included
+%                  1 for the second position means that the bottleneck transfer noise is included
+%                  0 for the second position means that the bottleneck transfer noise is not included
+%                  1 for the third element means that the DNA extraction noise is included
+%                  0 for the third element means that the DNA extraction noise is not included
+%                  1 for the fourth position means that the PCR noise is included
+%                  0 for the fourth position means that the PCR is not included
+%                  1 for the fifth element means that the sequencing noise is included
+%                  0 for the fifth element means that the sequencing noise is not included
+%
 % -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 %
+%
 % OUTPUTS
-% -- file_name: name of the file generated [WHAT IS OUTPUT TO THIS FILE?]
+% -- file_name: the name of the file generated,
+%               'data_evo_simu_0mut_complex_********-*********.mat' 
+%               when 'format' is set to be 'mat', and 
+%               'data_evo_simu_0mut_complex_********-*********.csv'
+%               when 'format' is set to be 'csv'
+%
 % -------------------------------------------------------------------------
-
-% Parse inputs
+% Parse inputs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 numvarargs = length(varargin);
 if numvarargs > 2
     error('evolution_0mut_complex:TooManyInputs', ...
         'requires at most 1 optional inputs');
 end
-optargs = {'format', 'csv'};
-optargs(1:numvarargs) = varargin;
-ouptput_format = optargs{2};
-
+vararg_update = {'format', 'csv'};
+vararg_update(1:numvarargs) = varargin;
+ouptput_format = vararg_update{2};
 
 noise_growth = noise_option(1);
 noise_bottleneck_transfer = noise_option(2);
@@ -43,14 +81,16 @@ noise_sequencing = noise_option(5);
 
 cell_num_evo = zeros(lineage, t_evo+1);
 cell_num_evo(:,1) = cell_num_ini;
-cell_num_evo_flask = cell_num_evo; % cell number in flask after transferred
+cell_num_evo_flask = cell_num_evo; % number of cells transferred at bottleneck
 x_mean = nan(1,t_evo+1);
 x_mean(1) = cell_num_ini'*x_ini/sum(cell_num_ini);
 
 t_seq_vec = 0:deltat:t_evo;
 
 
-% Simulate Pooled growth [CAN YOU GIVE A FEW MORE DESCRIPTIONS THROUGHOUT?]
+% Simulate pooled growth %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Step 1: Calulate the minimum cell number that are expected for a genotype 
+%         that is not growing and being lost to dilution
 cell_min = zeros(lineage, t_evo+1);
 cell_min(:,1) = cell_num_ini;
 if noise_bottleneck_transfer == 0
@@ -63,6 +103,11 @@ elseif noise_bottleneck_transfer == 1
     end
 end
 
+% Step 2: Growth regime under four different conditions, that is, 
+%         1. Without growth noise and without sampling noise during bottlenecks
+%         2. With growth noise but without sampling noise during bottlenecks
+%         3. Without growth noise but with sampling noise during bottlenecks
+%         4. With growth noise and with sampling noise during bottlenecks
 tstart0 = tic;
 if noise_growth==0 && noise_bottleneck_transfer==0
     if deltat>=2
@@ -259,20 +304,22 @@ telaps0=toc(tstart0);
 fprintf('Computing time for %i generations: %f seconds.\n', t_evo, telaps0)
 
 
-% After pooled growth
+% Step 3: Sample prep regime under eight different conditions, that is, 
+%         1. Without DNA extraction noise, without PCR noise, and without sequencing noise
+%         2. With DNA extraction noise, without PCR noise, and without sequencing noise
+%         3. Without DNA extraction noise, with PCR noise, and without sequencing noise
+%         4. Without DNA extraction noise, without PCR noise, and with sequencing noise
+%         5. With DNA extraction noise, with PCR noise, and without sequencing noise
+%         6. With DNA extraction noise, without PCR noise, and with sequencing noise
+%         7. Without DNA extraction noise, with PCR noise, and with sequencing noise
+%         8. With DNA extraction noise, with PCR noise, and with sequencing noise
 cell_num_mat_data = cell_num_evo(:,t_seq_vec+1);
-copy_number_PCRtemplate = 500;
-% copy_number_PCRtemplate: copy number per genotype for PCR template, >=500
-
-genomeDNA_percentage = copy_number_PCRtemplate/...
-    (mean(cell_num_ini)*2^deltat);
-% cell_num_mat_data*(1-1/2^deltat)*(copy_number_PCRtemplate*lineage)/...
-% (mean(cell_num_ini)*lineage*(2^dletat-1))...
-% = cell_num_mat_data*copy_number_PCRtemplate/(mean(cell_num_ini)*2^dletat)
-
+copy_number_PCRtemplate = 500; % copy_number_PCRtemplate: copy number per 
+                               % genotype for PCR template, >=500
+genomeDNA_percentage = copy_number_PCRtemplate/(mean(cell_num_ini)*2^deltat);
 PCR_cycle_number = 25; % PCR_cycle_number: number of cycles in PCR
 PCR_percentage = 0.01; % PCR_percentage: percantage of total PCR product
-%                        sent for sequencing
+                       % sent for sequencing
 
 if noise_genome_DNA_extraction==0 && noise_barcode_PCR==0 && ...
         noise_sequencing==0
@@ -378,8 +425,10 @@ elseif noise_genome_DNA_extraction==1 && noise_barcode_PCR==1 && ...
     num_mat_sequencing = poissrnd(num_mat_PCR*read_depth_average*lineage./...
         sum(num_mat_PCR));
 end
+% End of the main function %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+% Report Results %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 dt = datestr(now,'yyyymmdd-HHMMSSFFF');
 switch lower(ouptput_format)
     case {'mat'}
@@ -433,6 +482,6 @@ switch lower(ouptput_format)
             fprintf(fileID,'%f\n', output_parameters{k3+1,2});
         end
         fclose(fileID);
-        file_name = ['data_evo_simu_0mut_complex_' dt];
+        file_name = ['data_evo_simu_0mut_complex_' dt '.csv'];
 end
-return
+end
