@@ -64,10 +64,10 @@ A numerical simulation framework is developed to simulate the competitive pooled
 lineage = 1e4;
 t_evo = 24;
 cell_num_ini = 1e2*ones(lineage,1);  
-x_ini = random('Normal',0,0.15, [lineage,1]);  % Gaussian distribution with mean = 0 and standard devistion = 0.15 in this example
+x_ini = random('Normal',0,0.15, [lineage,1]);  % Gaussian with mean = 0 and standard devistion = 0.15
 read_depth_average = 100;  
 deltat = 8;  
-noise_option = [1,1,1,1,1];  % All five types of noise (cell growth, bottleneck cell transfer, DNA extraction, PCR, sequencing) are simulated in this example.
+noise_option = [1,1,1,1,1];  % All five types of noise are simulated
 
 [ file_name ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, x_ini, noise_option);
 ```
