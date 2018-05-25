@@ -11,32 +11,33 @@ function [r_est_l,likelihood_value] = xini_est_m2_complex(t_seq_vec_tempt,...
 % INPUTS
 % -- t_seq_vec_tempt: a vector of all sequencing time points
 %
-% -- x0_l: fitness of a genptype
+% -- x0_l: fitness of a genotype
 %
 % -- r_exp_l: observed read number of a genotype at each sequencing time
 %             point
 %
 % -- read_depth_tempt: a vector of the total read number of the population 
 %                      at each sequencing time point, 
-%                      size = 1 * length(t_seq_vec)
+%                      size = 1 * length(t_seq_vec_tempt)
 %
 % -- cell_depth_tempt: a vector of the effective cell number of the population 
 %                      at each sequencing time point, 
-%                      size = 1 * length(t_seq_vec)
+%                      size = 1 * length(t_seq_vec_tempt)
 %
 % -- x_mean_est_tempt: a vector of the mean fitness of the population at 
 %                      each sequencing time point, 
-%                      size = 1 * length(t_seq_vec)
+%                      size = 1 * length(t_seq_vec_tempt)
 %
 % -- kappa_vec_tempt: a vector of the kappa value at each sequencing time point, 
 %                     kappa is a noise parameter that characterizes the total 
 %                     noise introduced by growth, cell transfer, DNA extraction, 
-%                     PCR, and sequencing, 
-%                     size = 1 * length(t_seq_vec)
+%                     PCR, and sequencing, see Levy et al. Nature 2015 519, 81-186.
+%                     size = 1 * length(t_seq_vec_tempt)
 %
 % -- deltat_tempt: number of generations between two succesive cell transfers
-%                  (This is not redundant with t_seq_vec when t_seq_vec contains 
-%                   arbitrary sampling times)
+%             This is required in addition to t_seq_vec_tempt because not every 
+%             cell transfer is necessarely sequenced (e.g. t_seq_vec_tempt = [0, 3, 6,
+%             9, 15])
 %
 %
 % OUTPUTS

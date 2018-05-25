@@ -3,16 +3,17 @@ cell_num_ini, x_ini, noise_option, varargin)
 % -------------------------------------------------------------------------
 % evolution_0mut_simplified
 % SIMPLIFIED VERSION OF SIMULATED COMPETETIVE POOLED GROWTH OF A POPULATION 
-% OF GENOTYPES WITH DIFFERENT FITNESSES, WHICH ONLY INCLUDE GROWTH NOISE.
+% OF GENOTYPES WITH DIFFERENT FITNESSES. THESE SIMULATIONS INCLUDE ONLY GROWTH
+% NOISE, BUT NOT NOISE FROM CELL TRANSFERS, DNA EXTRACTION, PCR OR SEQUENCING.
 %
 %
 % INPUTS
 % -- lineage: number of genotypes of the population
 %
-% -- t_evo: total number of growth generations
+% -- t_evo: total number of generations grown
 %
-% -- cell_num_ini: a vector of initial cell number of each genotype at the 0-th
-%                  generation,
+% -- cell_num_ini: a vector of the initial cell number of each genotype at 
+%                  generation 0,
 %                  size = lineage * 1
 %
 % -- x_ini: a vector of the fitness of each genotype,
@@ -27,11 +28,14 @@ cell_num_ini, x_ini, noise_option, varargin)
 %
 %
 % OUTPUTS
-% -- file_name: the name of the file generated,
-%               'data_evo_simu_0mut_simplified_********-*********.mat' 
-%               when 'format' is set to be 'mat', and 
-%               'data_evo_simu_0mut_simplified_********-*********.csv'
-%               when 'format' is set to be 'csv'
+% -- file_name: the name of the file(s) written by the function.
+%               When 'format' is set to 'mat', output will be:
+%                  'data_evo_simu_0mut_simplified_*Time*.mat' 
+%               When 'format' is set to 'csv', output will be:
+%                   'data_evo_simu_0mut_simplified_*Time*_MeanFitness.mat' 
+%                   'data_evo_simu_0mut_simplified_*Time*_CellNumber.mat' 
+%                   'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.mat' 
+%                   'data_evo_simu_0mut_simplified_*Time*_Parameters.mat' 
 %
 % -------------------------------------------------------------------------
 % Parse inputs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -53,7 +57,7 @@ x_mean(1) = cell_num_ini'*x_ini/sum(cell_num_ini);
 
 
 % Simulate pooled growth %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Step 1: Growth regime under two different conditions, that is, 
+% Step 1: Grow under two possible conditions:
 %         1. Without growth noise
 %         2. With growth noise
 tstart0 = tic;

@@ -32,13 +32,13 @@ function [ x_ini_est_opt ] = xini_opt_command(t_seq_vec, BC_num_mat, ...
 % -- kappa_vec: a vector of the kappa value at each sequencing time point, 
 %               kappa is a noise parameter that characterizes the total noise 
 %               introduced by growth, cell transfer, DNA extraction, PCR, and 
-%               sequencing, 
+%               sequencing, see Levy et al. Nature 2015 519, 81-186.
 %               size = 1 * length(t_seq_vec)
 %
-% -- deltat: number of generations between two succesive cell transfers
-%            (This is not redundant with t_seq_vec when t_seq_vec contains 
-%            arbitrary sampling times)
-%
+% --  deltat: number of generations between two succesive cell transfers
+%             This is required in addition to t_seq_vec because not every 
+%             cell transfer is necessarely sequenced (e.g. t_seq_vec = [0, 3, 6,
+%             9, 15])
 %
 % OUTPUTS
 % -- x_ini_est_opt: a vector of the estimated fitness of each genotype, 
@@ -89,7 +89,8 @@ for i = 1:lineage
         % function, given an initial inferred value of fitness
         options = optimoptions(@fminunc, 'Algorithm', 'quasi-newton', ...
             'MaxFunEvals',1e8, 'MaxIter',1000, 'Display','off');
-        [x_ini_est_opt(i)] = fminunc(@xini_opt_m2_complex, x_ini0(i), options);    
+        [x_ini_est_opt(i)] = fminunc(@xini_opt_m2_complex, x_ini0(i), options);
+        % see xini_opt_m2_complex.m
     end
 end
 end

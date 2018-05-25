@@ -3,7 +3,7 @@ function [ file_name ] = evolution_0mut_complex(lineage, t_evo, ...
 % -------------------------------------------------------------------------
 % evolution_0mut_completed
 % COMPLEX VERSION OF SIMULATED COMPETETIVE POOLED GROWTH OF A POPULATION OF 
-% GENOTYPES WITH DIFFERENT FITNESSES, WHICH INCLUDE EXPERIMENTAL NOISE SUCH
+% GENOTYPES WITH DIFFERENT FITNESSES. THESE SIMULATIONS INCLUDE EXPERIMENTAL NOISE SUCH
 % AS GROWTH NOISE, SAMPLING DURING BOTTLENECKS, DNA EXTRACTION, PCR, AND
 % SAMPLING ON SEQUENCER. 
 %
@@ -11,10 +11,10 @@ function [ file_name ] = evolution_0mut_complex(lineage, t_evo, ...
 % INPUTS
 % -- lineage: number of genotypes of the population
 %
-% -- t_evo: total number of growth generations
+% -- t_evo: total number of generations grown 
 %
-% -- cell_num_ini: a vector of initial cell number of each genotype at the 0-th
-%                  generation,
+% -- cell_num_ini: a vector of the initial cell number of each genotype at 
+%                  generation 0,
 %                  size = lineage * 1
 %
 % -- x_ini: a vector of the fitness of each genotype,
@@ -22,24 +22,18 @@ function [ file_name ] = evolution_0mut_complex(lineage, t_evo, ...
 %
 % -- deltat: number of generations between two successive cell transfers
 %
-% -- read_depth_average: average read number of reads per genotype per
+% -- read_depth_average: average number of reads per genotype per
 %                        sequencing time point
 
-% -- cell_num_ini: a vector of initial cell number of every genotype at the 
-%                  0-th generation, 
+% -- cell_num_ini: a vector of the initial cell number of every genotype at the 
+%                  generation 0, 
 %                  size = lineage * 1
 %
-% -- x_ini: a vector of fitness of every genotype, 
+% -- x_ini: a vector of the fitness of every genotype, 
 %           size = lineage * 1
 %
-% -- deltat: uumber of generations between successive cell transfer
-%
-% -- read_depth_average: average read number of a genotype per sequencing
-%                        time point
-%
-% -- noise_option: a vector of options of whether five types of noise 
+% -- noise_option: a vector of whether five types of noise are simulated
 %                  (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing)
-%                  are simulated, 
 %                  size = 1*5 logical (0-1) vector, 
 %                  1 for the first element means that the cell growth noise is included
 %                  0 for the first element means that the cell growth noise is not included
@@ -56,11 +50,16 @@ function [ file_name ] = evolution_0mut_complex(lineage, t_evo, ...
 %
 %
 % OUTPUTS
-% -- file_name: the name of the file generated,
-%               'data_evo_simu_0mut_complex_********-*********.mat' 
-%               when 'format' is set to be 'mat', and 
-%               'data_evo_simu_0mut_complex_********-*********.csv'
-%               when 'format' is set to be 'csv'
+% -- file_name: the name of the file(s) written by the function.
+%               When 'format' is set to 'mat', output will be:
+%                  'data_evo_simu_0mut_complex_*Time*.mat' 
+%               When 'format' is set to 'csv', output will be:
+%                   'data_evo_simu_0mut_complex_*Time*_MeanFitness.mat' 
+%                   'data_evo_simu_0mut_complex_*Time*_CellNumber.mat' 
+%                   'data_evo_simu_0mut_complex_*Time*_EffectiveCellDepth.mat' 
+%                   'data_evo_simu_0mut_complex_*Time*_Parameters.mat'
+%                   'data_evo_simu_0mut_complex_*Time*_SequencedTimepoints.mat'
+%                   'data_evo_simu_0mut_complex_*Time*_Reads.mat' 
 %
 % -------------------------------------------------------------------------
 % Parse inputs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -89,7 +88,7 @@ t_seq_vec = 0:deltat:t_evo;
 
 
 % Simulate pooled growth %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Step 1: Calulate the minimum cell number that are expected for a genotype 
+% Step 1: Calulate the minimum cell number that is expected for a genotype 
 %         that is not growing and being lost to dilution
 cell_min = zeros(lineage, t_evo+1);
 cell_min(:,1) = cell_num_ini;
@@ -103,7 +102,7 @@ elseif noise_bottleneck_transfer == 1
     end
 end
 
-% Step 2: Growth regime under four different conditions, that is, 
+% Step 2: Growth under four possible conditions: 
 %         1. Without growth noise and without sampling noise during bottlenecks
 %         2. With growth noise but without sampling noise during bottlenecks
 %         3. Without growth noise but with sampling noise during bottlenecks
@@ -304,7 +303,7 @@ telaps0=toc(tstart0);
 fprintf('Computing time for %i generations: %f seconds.\n', t_evo, telaps0)
 
 
-% Step 3: Sample prep regime under eight different conditions, that is, 
+% Step 3: Sample prep under eight possible conditions:
 %         1. Without DNA extraction noise, without PCR noise, and without sequencing noise
 %         2. With DNA extraction noise, without PCR noise, and without sequencing noise
 %         3. Without DNA extraction noise, with PCR noise, and without sequencing noise
