@@ -37,10 +37,11 @@ End with an example of getting some data out of the system or using it for a lit
 Explain how to run the automated tests for this system
 
 ### Pooled growth simulation
-A numerical simulation framework is developed to simulate the competitive pooled cell growth of a population of genotypes with different fitnesses, and includes all sources of experimental noise, such as growth noise, sampling during bottlenecks, DNA extraction, PCR, and sampling on the sequencer. The simulation is performed in MATLAB using “evolution_0mut_complex.m”.
+A numerical simulation framework is developed to simulate the competitive pooled cell growth of a population of genotypes with different fitnesses. There are two versions of simulation. The complexed version of simulation (“evolution_0mut_complex.m”) includes all sources of experimental noise, such as growth noise, sampling during bottlenecks, DNA extraction, PCR, and sampling on the sequencer. The simplified version of simulation (“evolution_0mut_simplified.m”) includes includes only growth noise.
 
+#### Complex version
 
-#### Inputs
+##### Inputs
 -- lineage: number of genotypes of the population
 
 -- t_evo: total number of growth generations
@@ -57,7 +58,7 @@ A numerical simulation framework is developed to simulate the competitive pooled
 
 -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
-#### Outputs
+##### Outputs
 -- file_name: name of the file generated, the standard file generated 'data_evo_simu_0mut_complex_********-*********.mat' when 'format' is set to be 'mat', and 'data_evo_simu_0mut_complex_********-*********.csv' when 'format' is set to be 'csv'
 
 ```
@@ -72,7 +73,40 @@ noise_option = [1,1,1,1,1];  % All five types of noise are simulated
 [ file_name ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, x_ini, noise_option);
 ```
 
-#### Complex version
+
+#### Simplified version
+
+##### Inputs
+-- lineage: number of genotypes of the population
+
+-- t_evo: total number of growth generations
+
+-- cell_num_ini: a vector of initial cell number of each genotype at the 0-th generation, size = lineage * 1
+
+-- x_ini: a vector of the fitness of each genotype, size = lineage * 1
+
+-- noise_option: options of whether cell growth noise is simulated, an logical (0-1) scaler value where 1 means that the cell growth noise is included and 0 means that the cell growth noise is not included.
+
+-- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
+
+##### Outputs
+-- file_name: name of the file generated, the standard file generated 'data_evo_simu_0mut_complex_********-*********.mat' when 'format' is set to be 'mat', and 'data_evo_simu_0mut_complex_********-*********.csv' when 'format' is set to be 'csv'
+
+```
+lineage = 1e4;
+t_evo = 24;
+cell_num_ini = 1e2*ones(lineage,1);  
+x_ini = random('Normal',0,0.15, [lineage,1]);  % Gaussian with mean = 0 and standard devistion = 0.15
+read_depth_average = 100;  
+deltat = 8;  
+noise_option = [1,1,1,1,1];  % All five types of noise are simulated
+
+[ file_name ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, x_ini, noise_option);
+```
+
+
+
+
 
 ### Fitness estimation using Fit-Seq
 
