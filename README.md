@@ -1,6 +1,6 @@
 # Fit-Seq
 
-One Paragraph of project description goes here
+Fit-Seq is a MATLAB-based fitness estimation tool for pooled amplicon sequencing studies. Fit-Seq is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR APARTICULAR PURPOSE.
 
 ## Getting Started
 
