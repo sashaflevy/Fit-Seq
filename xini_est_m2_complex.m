@@ -3,32 +3,58 @@ function [r_est_l,likelihood_value] = xini_est_m2_complex(t_seq_vec_tempt,...
     kappa_vec_tempt,deltat_tempt)
 % -------------------------------------------------------------------------
 % xini_est_m2_complex
-% A SUB-FUNCTION USED IN Fit-Seq.m TO ESTIMTE READ NUMBER OF A GENOTYPE AT
-% ALL SEQUENCING TIME POINTS GIVEN FITNESS
+% A SUB-FUNCTION CALLED BY Fit-Seq.m TO CALCULATE THE ESTIMTED READ NUMBER 
+% OF A GENOTYPE AT ALL SEQUENCING TIME POINTS AND THE LIKEHOOD VALUE OF THE
+% GENOTYPE
+%
 %
 % INPUTS
-% -- t_seq_vec: a vector of all sequencing time points
+% -- t_seq_vec_tempt: a vector of all sequencing time points
+%
 % -- x0_l: fitness of a genptype
+%
 % -- r_exp_l: observed read number of a genotype at each sequencing time
 %             point
-% -- read_depth: vector of total read number of the population at each sequencing
-%                time points, 1 * length(t_seq_vec) 
-% -- cell_depth: vector of the total effective cell number of the population at 
-%                each sequencing time point, 1 * length(t_seq_vec) 
-% -- x_mean_est: vector of the mean fitness of the population at each sequencing 
-%                time point, 1 * length(t_seq_vec) 
+%
+% -- read_depth_tempt: a vector of the total read number of the population 
+%                      at each sequencing time point, 
+%                      size = 1 * length(t_seq_vec)
+%
+% -- cell_depth_tempt: a vector of the effective cell number of the population 
+%                      at each sequencing time point, 
+%                      size = 1 * length(t_seq_vec)
+%
+% -- x_mean_est_tempt: a vector of the mean fitness of the population at 
+%                      each sequencing time point, 
+%                      size = 1 * length(t_seq_vec)
+%
+% -- kappa_vec_tempt: a vector of the kappa value at each sequencing time point, 
+%                     kappa is a noise parameter that characterizes the total 
+%                     noise introduced by growth, cell transfer, DNA extraction, 
+%                     PCR, and sequencing, 
+%                     size = 1 * length(t_seq_vec)
+%
+% -- deltat_tempt: number of generations between two succesive cell transfers
+%                  (This is not redundant with t_seq_vec when t_seq_vec contains 
+%                   arbitrary sampling times)
+%
 %
 % OUTPUTS
-% -- r_est_l: vector of the estimated read number of a genotype at each sequencing 
-%             time point, 1*length(t_seq_vec_tempt) 
+% -- r_est_l: a vector of the estimated read number of a genotype at each 
+%             sequencing time point, 
+%             size = 1*length(t_seq_vec_tempt)
+%
+% -- likelihood_value: likelihood value of a genptype
+%
 % -------------------------------------------------------------------------
-%%
-% [CAN YOU ADD A FEW MORE COMMENTS THROUGHOUT TO EXPLAIN WHAT IS HAPPENING?]
 vec_length = length(t_seq_vec_tempt);
-r_est_l = zeros(1, vec_length);
-% r_est_l: estimated read number of a genotype at each sequencing time point
+r_est_l = zeros(1, vec_length); % r_est_l: estimated read number of a genotype 
+                                % at each sequencing time point
 r_est_l(1) = r_exp_l(1);
 
+% Calculate the minimum read number for a genotype at each sequencing time point
+% This minimum represents the number of reads that are expected for a genotype 
+% that is not growing and being lost to dilution  
 r_est_l_min = zeros(1, vec_length);
 if t_seq_vec_tempt(1) == 0
     r_est_l_min(1) = r_exp_l(1)/2^deltat_tempt;
@@ -47,6 +73,9 @@ elseif t_seq_vec_tempt(1) ~= 0
     end
 end
 
+% Estimate the relative fitness (relative to mean fitness) for a genotype,
+% and calculate the estimated read number of the genotype at all sequencing
+% time points
 for j1 = 2:vec_length
     x_mean_est_interp = interp1([t_seq_vec_tempt(j1-1),t_seq_vec_tempt(j1)],...
         [x_mean_est_tempt(j1-1),x_mean_est_tempt(j1)], ...
@@ -58,6 +87,8 @@ for j1 = 2:vec_length
         (read_depth_tempt(j1-1)*cell_depth_tempt(j1)),r_est_l_min(j1));
 end
 
+% Calculate the value of the likelihood function for a genotype using the 
+% true and estimated read number data of the genotype
 likelihood_vec_log = nan(1,vec_length);
 pos1 = r_est_l>=20 & r_exp_l>0;
 likelihood_vec_log(pos1) = 1/4*log(r_est_l(pos1))-...
@@ -77,3 +108,4 @@ pos4 = r_est_l>0 & r_est_l<20 & r_exp_l == 0;
 likelihood_vec_log(pos4) = -r_est_l(pos4);
 
 likelihood_value = nansum(likelihood_vec_log(2:end));
+end
