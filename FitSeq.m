@@ -12,7 +12,8 @@ function [ file_name, x_estimate_result, r_estimate_result, x_mean_est ] = ...
 %                         sequencing time point,
 %                         size = genotypes * length(t_seq_vec) 
 %
-% -- effective_cell_depth: a vector of the effective cell number of population 
+% -- effective_cell_depth: a vector of the effective cell number (number of 
+%                          cells transferred at the bottleneck) of population 
 %                          at each sequencing time point,
 %                          size = 1 * length(t_seq_vec)
 %
@@ -20,7 +21,7 @@ function [ file_name, x_estimate_result, r_estimate_result, x_mean_est ] = ...
 %             (This is not redundant with t_seq_vec when t_seq_vec contains 
 %             arbitrary sampling times)
 %
-% -- 'format': optional, file format of outputs, 'csv'(default) or 'mat'
+% -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 %
 % -- 'kappa': optional, a noise parameter that characterizes the total noise 
 %             introduced by growth, cell transfer, DNA extraction, PCR, and 
@@ -32,16 +33,23 @@ function [ file_name, x_estimate_result, r_estimate_result, x_mean_est ] = ...
 %
 %
 % OUTPUTS
-% -- file_name: name of the file generated
+% -- file_name: the name of the file generated.
+%               'Fit-Seq_result_********-*********.mat' when 'format' is
+%               set to be 'mat', and 'Fit-Seq_result_********-*********.csv'
+%               when 'format' is set to be 'csv'
 %
-% -- x_estimate_result: vector of the estimated fitness of each genotype
+% -- x_estimate_result: a vector of the estimated fitness of each genotype
 %
-% -- r_estimate_result: matrix of the estimated read number of each genotype 
+% -- r_estimate_result: a matrix of the estimated read number of each genotype 
 %                       at each sequencing time point,
 %                       size = genotypes * length(t_seq_vec)
 %
+% -- x_mean_est: a vector of the estimated mean fitness of the population
+%                at each sequencing time point,
+%                size = 1 * length(t_seq_vec)
+% 
 %--------------------------------------------------------------------------
-% Parse Inputs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Parse inputs %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 numvarargs = length(varargin);
 if numvarargs > 6
     error('FitSeq:TooManyInputs', 'requires at most 3 optional inputs');
@@ -163,10 +171,10 @@ switch lower(ouptput_format)
         file_name = ['Fit-Seq_result_' dt '.mat'];
         save(file_name,'file_name','x_estimate_result','r_estimate_result')
     case {'csv'}
-        file_name_1 = ['Fit-Seq_result_EstimatedFitness' dt '.csv'];
-        file_name_2 = ['Fit-Seq_result_EstimatedReads' dt '.csv'];
+        file_name_1 = ['Fit-Seq_result_EstimatedFitness_' dt '.csv'];
+        file_name_2 = ['Fit-Seq_result_EstimatedReads_' dt '.csv'];
         csvwrite(file_name_1,x_estimate_result)
         csvwrite(file_name_2,r_estimate_result)
-        file_name = ['Fit-Seq_result_' dt];
+        file_name = ['Fit-Seq_result_' dt '.csv'];
 end
 end
