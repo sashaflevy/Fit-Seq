@@ -1,109 +1,118 @@
-%% An expample of evolution_0mut_simplified.m
+# Fit-Seq
 
-% INPUTS
-lineage = 1e4;  
-% number of genotypes of the population
-t_evo = 24;  
-% total number of growth generations
+One Paragraph of project description goes here
+
+## Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
+
+### Prerequisites
+
+What things you need to install the software and how to install them
+
+```
+Give examples
+```
+
+### Installing
+
+A step by step series of examples that tell you have to get a development env running
+
+Say what the step will be
+
+```
+Give the example
+```
+
+And repeat
+
+```
+until finished
+```
+
+End with an example of getting some data out of the system or using it for a little demo
+
+## Running the tests
+
+Explain how to run the automated tests for this system
+
+### Pooled growth simulation
+A numerical simulation framework is developed to simulate the competitive pooled cell growth of a population of genotypes with different fitnesses, and includes all sources of experimental noise, such as growth noise, sampling during bottlenecks, DNA extraction, PCR, and sampling on the sequencer. The simulation is performed in MATLAB using “evolution_0mut_complex.m”.
+
+
+#### Inputs
+-- lineage: number of genotypes of the population
+
+-- t_evo: total number of growth generations
+
+-- cell_num_ini: a vector of initial cell number of each genotype at the 0-th generation, size = lineage * 1
+
+-- x_ini: a vector of the fitness of each genotype, size = lineage * 1
+
+-- deltat: number of generations between successive cell transfers
+
+-- read_depth_average: average number of reads per genotype per sequencing time point
+
+-- noise_option: a vector of options of whether five types of noise, cell growth, cell transfer at the bottleneck, DNA extraction, PCR, and sequencing (in that order in the vector) are simulated, size = 1 * 5, 1 means the noise is included and 0 means the noise is not included.
+
+-- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
+
+#### Outputs
+-- file_name: name of the file generated, the standard file generated 'data_evo_simu_0mut_complex_********-*********.mat' when 'format' is set to be 'mat', and 'data_evo_simu_0mut_complex_********-*********.csv' when 'format' is set to be 'csv'
+
+```
+lineage = 1e4;
+t_evo = 24;
 cell_num_ini = 1e2*ones(lineage,1);  
-% a vector of initial cell number of each genotype at the 0-th generation
-x_ini = random('Normal',0,0.2, [lineage,1]);  
-% a vector of the fitness of each genotype. Here is a Gaussian distribution 
-% with mean = 0 and standard devistion = 0.2
-noise_option = 1;  
-% options of whether cell growth noise is simulated. growth noise is 
-% simjulated in this example
-
-% Execute
-[ file_name ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, ...
-    x_ini, noise_option);
-% file_name: the name of the file generated, 
-% 'data_evo_simu_0mut_simplified_********-*********.mat' 
-% when 'format' is set to be 'mat', and 
-% 'data_evo_simu_0mut_simplified_********-*********.csv'
-%  when 'format' is set to be 'csv'
-
-
-
-%% An expample of evolution_0mut_complex.m
-
-% INPUTS
-lineage = 1e4;  
-% number of genotypes of the population
-t_evo = 24;  
-% total number of growth generations
-cell_num_ini = 1e2*ones(lineage,1);  
-% a vector of initial cell number of each genotype at the 0-th generation
-x_ini = random('Normal',0,0.15, [lineage,1]);  
-% a vector of the fitness of each genotype. Here is a Gaussian distribution 
-% with mean = 0 and standard devistion = 0.15
+x_ini = random('Normal',0,0.15, [lineage,1]);  % Gaussian with mean = 0 and standard devistion = 0.15
 read_depth_average = 100;  
-% average read number of reads per genotype per sequencing
 deltat = 8;  
-% number of generations between two successive cell transfers
-noise_option = [1,1,1,1,1];  
-% a vector of options of whether five types of noise (cell growth, bottleneck 
-% transfer, DNA extraction, PCR, sequencing) are simulated. Five types of 
-% noise are simulated in this example
-                             
-% Execute
-[ file_name ] = evolution_0mut_complex(lineage, t_evo, cell_num_ini, ...
-    x_ini, deltat, read_depth_average, noise_option);
-% file_name: the name of the file generated, 
-% 'data_evo_simu_0mut_complex_********-*********.mat' 
-% when 'format' is set to be 'mat', and 
-% 'data_evo_simu_0mut_complex_********-*********.csv'
-%  when 'format' is set to be 'csv'
-% ----------------------------------------------------------------------------------------------------
+noise_option = [1,1,1,1,1];  % All five types of noise are simulated
 
+[ file_name ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, x_ini, noise_option);
+```
 
+#### Complex version
 
-%% An expample of Fit-Seq.m
+### Fitness estimation using Fit-Seq
 
-% INPUTS
-% Two way of loading the inputs. The first way is loading '.csv' files that 
-% generated by running evolution_0mut_complex.m at the previouse step, and 
-% the second way is loading the '.csv' file (Simulated-Pooled-Growth_Reads.csv) 
-% that we provided
+Explain what these tests test and why
 
-% Way 1 of loading inputs
-t_seq_vec = csvread('data_evo_simu_0mut_complex_********-*********_SeuqencedTimepoints.csv');
-% a vector of all sequencing time points
-BC_num_mat_original = csvread('data_evo_simu_0mut_complex_********-*********_Reads.csv');
-% a matrix of read number of each genotype at each sequencing time point
-effective_cell_depth = csvread('data_evo_simu_0mut_complex_********-*********_EffectiveCellDepth.csv');
-% a vector of the effective cell number (number of cells transferred at the bottleneck) 
-% of population at each sequencing time point
-deltat_temp = textscan(fopen('data_evo_simu_0mut_complex_********-*********_Paramaters.csv'),...
-    '%*f %*f %*f %*f %f %*f %*s','Delimiter',',','headerLines', 1);
-deltat = deltat_temp{1}(1);   
-% number of generations between two succesive cell transfers
+```
+Give an example
+```
 
+## Deployment
 
-% Way 2 of loading inputs
-t_seq_vec = 0:8:24;
-% a vector of all sequencing time points
-BC_num_mat_original = csvread('Simulated-Pooled-Growth_Reads.csv');
-% a matrix of read number of each genotype at each sequencing time point,
-effective_cell_depth = [1000000, 999300, 999040, 999350];
-% a vector of the effective cell number (number of cells transferred at the 
-% bottleneck) of population at each sequencing time point
-deltat = 8;
-% number of generations between two succesive cell transfers
+Add additional notes about how to deploy this on a live system
 
+## Built With
 
-% Execute
-[file_name, x_estimate_result, r_estimate_result, x_mean_est] = ...
-    FitSeq(t_seq_vec, BC_num_mat_original, effective_cell_depth, deltat,'format','mat');
+* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
+* [Maven](https://maven.apache.org/) - Dependency Management
+* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
 
-% file_name: name of the file generated. 'Fit-Seq_result_********-*********.mat'
-% when 'format' is set to be 'mat', and 'Fit-Seq_result_********-*********.csv' 
-% when 'format' is set to be 'csv'
-%
-% x_estimate_result: a vector of the estimated fitness of each genotype
-%
-% r_estimate_result: a matrix of the estimated read number of each genotype 
-% at each sequencing time point, size = genotypes * length(t_seq_vec)
-%
-% x_mean_est: a vector of the estimated mean fitness of the population at 
-% each sequencing time point, size = 1 * length(t_seq_vec)
+## Contributing
+
+Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
+
+## Versioning
+
+We use [SemVer](http://semver.org/) for versioning. For the versions available, see the [tags on this repository](https://github.com/your/project/tags). 
+
+## Authors
+
+* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+
+See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+
+## Acknowledgments
+
+* Hat tip to anyone who's code was used
+* Inspiration
+* etc
+
