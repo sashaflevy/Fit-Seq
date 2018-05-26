@@ -33,7 +33,8 @@ Models competative pooled growth of a population of genotypes with different fit
 
 -- x_ini: a vector of the fitness of each genotype, size = lineage * 1
 
--- noise_option: options of whether cell growth noise is simulated, logical (0-1) scaler value, 1 means that the cell growth noise is included and 0 means that the cell growth noise is not included
+-- noise_option: options of whether cell growth noise is simulated, logical (0-1) scaler value, 1 means that the cell growth   
+                 noise is included and 0 means that the cell growth noise is not included
 
 -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
