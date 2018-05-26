@@ -39,6 +39,7 @@ function [ file_name, x_estimate_result, r_estimate_result, x_mean_est ] = ...
 %                   Fit-Seq_result_EstimatedFitness_*Time*.csv'
 %                   Fit-Seq_result_EstimatedReads_*Time*.csv'
 %
+% OUTPUTS
 % -- x_estimate_result: a vector of the estimated fitness of each genotype
 %
 % -- r_estimate_result: a matrix of the estimated read number of each genotype 

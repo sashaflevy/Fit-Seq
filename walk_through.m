@@ -4,15 +4,15 @@
 lineage = 1e4;  
 % number of genotypes of the population
 t_evo = 24;  
-% total number of growth generations
+% total number of generations grown
 cell_num_ini = 1e2*ones(lineage,1);  
-% a vector of initial cell number of each genotype at the 0-th generation
+% a vector of initial cell number of each genotype at generation 0
 x_ini = random('Normal',0,0.2, [lineage,1]);  
 % a vector of the fitness of each genotype. Here is a Gaussian distribution 
 % with mean = 0 and standard devistion = 0.2
 noise_option = 1;  
-% options of whether cell growth noise is simulated. growth noise is 
-% simjulated in this example
+% option of whether cell growth noise is simulated. growth noise is 
+% simulated in this example
 
 % Execute
 [ file_name ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, ...
@@ -31,20 +31,20 @@ noise_option = 1;
 lineage = 1e4;  
 % number of genotypes of the population
 t_evo = 24;  
-% total number of growth generations
+% total number of generations grown
 cell_num_ini = 1e2*ones(lineage,1);  
-% a vector of initial cell number of each genotype at the 0-th generation
+% a vector of initial cell number of each genotype at generation 0
 x_ini = random('Normal',0,0.15, [lineage,1]);  
-% a vector of the fitness of each genotype. Here is a Gaussian distribution 
+% a vector of the fitness of each genotype. Here, this is a Gaussian distribution 
 % with mean = 0 and standard devistion = 0.15
 read_depth_average = 100;  
-% average read number of reads per genotype per sequencing
+% average number of reads per genotype per sequencing
 deltat = 8;  
 % number of generations between two successive cell transfers
 noise_option = [1,1,1,1,1];  
-% a vector of options of whether five types of noise (cell growth, bottleneck 
-% transfer, DNA extraction, PCR, sequencing) are simulated. Five types of 
-% noise are simulated in this example
+% a vector of whether to simulate each of five types of noise (cell growth, bottleneck 
+% transfer, DNA extraction, PCR, sequencing). Here, all five types of 
+% noise are simulated.
                              
 % Execute
 [ file_name ] = evolution_0mut_complex(lineage, t_evo, cell_num_ini, ...
@@ -70,7 +70,7 @@ noise_option = [1,1,1,1,1];
 t_seq_vec = csvread('data_evo_simu_0mut_complex_********-*********_SeuqencedTimepoints.csv');
 % a vector of all sequencing time points
 BC_num_mat_original = csvread('data_evo_simu_0mut_complex_********-*********_Reads.csv');
-% a matrix of read number of each genotype at each sequencing time point
+% a matrix of the read number of each genotype at each sequencing time point
 effective_cell_depth = csvread('data_evo_simu_0mut_complex_********-*********_EffectiveCellDepth.csv');
 % a vector of the effective cell number (number of cells transferred at the bottleneck) 
 % of population at each sequencing time point
