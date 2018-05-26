@@ -19,10 +19,11 @@ You must have MATLAB (version 2018a or newer) installed that includes the Optimi
 
 A walk-through of how to perform each simulation and FitSeq fitness estimates on these simulations is provided in walk_through.m
 
-# Simplified Simulations 
+### Simplified Simulations 
 Models competative pooled growth of a population of genotypes with different fitnesses. This simulation include only growth noise, but not noise from cell transfers, DNA extraction, PCR, or sequencing.
 
-INPUTS
+#### INPUTS
+
 -- lineage: number of genotypes of the population
 
 -- t_evo: total number of generations grown
@@ -42,8 +43,9 @@ INPUTS
  -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
 
- OUTPUTS
- -- file_name: the name of the file(s) written by the function.
+#### OUTPUTS
+
+-- file_name: the name of the file(s) written by the function.
                When 'format' is set to 'mat', output will be:
                   'data_evo_simu_0mut_simplified_*Time*.mat' 
                When 'format' is set to 'csv', output will be:
@@ -52,6 +54,7 @@ INPUTS
                    'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.mat' 
                    'data_evo_simu_0mut_simplified_*Time*_Parameters.mat' 
 
+#### Example
 ```
 lineage = 1e4;  % number of genotypes of the population
 t_evo = 24;  % total number of generations grown
@@ -63,10 +66,11 @@ noise_option = 1;  %cell growth noise is simulated
 [ test.simple.csv ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, x_ini, noise_option);
 ```
 
-# Complex Simulations 
+### Complex Simulations 
 Models competative pooled growth of a population of genotypes with different fitnesses. This simulation may include many sources of noise, including growth noise, noise from cell transfers, DNA extraction, PCR, and sequencing.
 
- INPUTS
+#### INPUTS
+ 
  -- lineage: number of genotypes of the population
 
  -- t_evo: total number of generations grown 
@@ -107,7 +111,8 @@ Models competative pooled growth of a population of genotypes with different fit
  -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
 
- OUTPUTS
+#### OUTPUTS
+
  -- file_name: the name of the file(s) written by the function.
                When 'format' is set to 'mat', output will be:
                   'data_evo_simu_0mut_complex_*Time*.mat' 
@@ -118,7 +123,7 @@ Models competative pooled growth of a population of genotypes with different fit
                    'data_evo_simu_0mut_complex_*Time*_Parameters.mat'
                    'data_evo_simu_0mut_complex_*Time*_SequencedTimepoints.mat'
                    'data_evo_simu_0mut_complex_*Time*_Reads.mat' 
-
+#### Example
 ```
 lineage = 1e4;  % number of genotypes of the population
 t_evo = 24;  % total number of generations grown
@@ -133,7 +138,7 @@ noise_option = [1,1,1,1,1];  % a vector of whether to simulate each of five type
 ```
 
 
-# Fitness Estimation
+### Fitness Estimation
 Estimates the fitness of each genotype from read-count time-series data.
 
  INPUTS
