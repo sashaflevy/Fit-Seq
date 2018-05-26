@@ -183,13 +183,11 @@ Estimates the fitness of each genotype from read-count time-series data.
 Inputting data from simulation
 
 ```
-t_seq_vec = csvread('data_evo_simu_0mut_complex_`_SeuqencedTimepoints.csv'); % a vector of all sequencing time points
-BC_num_mat_original = csvread('data_evo_simu_0mut_complex_********-*********_Reads.csv'); % a matrix of the read number of each genotype at each sequencing time point
-effective_cell_depth = csvread('data_evo_simu_0mut_complex_********-*********_EffectiveCellDepth.csv'); % a vector of the effective cell number (number of cells transferred at the bottleneck) of population at each sequencing time point
-deltat_temp = textscan(fopen('data_evo_simu_0mut_complex_********-*********_Paramaters.csv'),...
-    '%*f %*f %*f %*f %f %*f %*s','Delimiter',',','headerLines', 1);
-deltat = deltat_temp{1}(1);   
-% number of generations between two succesive cell transfers
+t_seq_vec = csvread([test.complex.csv, '_SeuqencedTimepoints.csv']); % a vector of all sequencing time points
+BC_num_mat_original = csvread([test.complex.csv, '_Reads.csv']); % a matrix of the read number of each genotype at each sequencing time point
+effective_cell_depth = csvread([test.complex.csv, '_EffectiveCellDepth.csv'); % a vector of the effective cell number (number of cells transferred at the bottleneck) of population at each sequencing time point
+deltat_temp = textscan(fopen([test.complex.csv, '_Paramaters.csv']),'%*f %*f %*f %*f %f %*f %*s','Delimiter',',','headerLines', 1);
+deltat = deltat_temp{1}(1); % number of generations between two succesive cell transfers
 ```
 
 
