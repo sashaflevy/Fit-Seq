@@ -46,13 +46,13 @@ Models competative pooled growth of a population of genotypes with different fit
 #### OUTPUTS
 
 -- file_name: the name of the file(s) written by the function.
-               When 'format' is set to 'mat', output will be:
-                  'data_evo_simu_0mut_simplified_*Time*.mat' 
-               When 'format' is set to 'csv', output will be:
-                   'data_evo_simu_0mut_simplified_*Time*_MeanFitness.mat' 
-                   'data_evo_simu_0mut_simplified_*Time*_CellNumber.mat' 
-                   'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.mat' 
-                   'data_evo_simu_0mut_simplified_*Time*_Parameters.mat' 
+               When 'format' is set to 'mat', output will be:  
+                  'data_evo_simu_0mut_simplified_*Time*.mat'   
+               When 'format' is set to 'csv', output will be:  
+                   'data_evo_simu_0mut_simplified_*Time*_MeanFitness.mat'   
+                   'data_evo_simu_0mut_simplified_*Time*_CellNumber.mat'   
+                   'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.mat'   
+                   'data_evo_simu_0mut_simplified_*Time*_Parameters.mat'   
 
 #### Example
 ```
