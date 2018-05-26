@@ -25,29 +25,28 @@ Models competative pooled growth of a population of genotypes with different fit
 
 #### INPUTS
 
--- lineage: number of genotypes of the population
++ lineage: number of genotypes of the population
 
--- t_evo: total number of generations grown
++ t_evo: total number of generations grown
 
--- cell_num_ini: a vector of the initial cell number of each genotype at generation 0, size = lineage * 1
++ cell_num_ini: a vector of the initial cell number of each genotype at generation 0, size = lineage * 1
 
--- x_ini: a vector of the fitness of each genotype, size = lineage * 1
++ x_ini: a vector of the fitness of each genotype, size = lineage * 1
 
--- noise_option: options of whether cell growth noise is simulated, logical (0-1) scaler value, 1 means that the cell growth     
-                 noise is included and 0 means that the cell growth noise is not included
++ noise_option: options of whether cell growth noise is simulated, logical (0-1) scaler value, 1 means that the cell growth noise is included and 0 means that the cell growth noise is not included  
 
--- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
++ 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
 #### OUTPUTS
 
--- file_name: the name of the file(s) written by the function.  
-               When 'format' is set to 'mat', output will be:  
-                  'data_evo_simu_0mut_simplified_*Time*.mat'   
-               When 'format' is set to 'csv', output will be:  
-                   'data_evo_simu_0mut_simplified_*Time*_MeanFitness.mat'   
-                   'data_evo_simu_0mut_simplified_*Time*_CellNumber.mat'   
-                   'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.mat'   
-                   'data_evo_simu_0mut_simplified_*Time*_Parameters.mat'   
++ file_name: the name of the file(s) written by the function.
+    - When 'format' is set to 'mat', output will be:<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*.mat'<br/>
+    - When 'format' is set to 'csv', output will be:<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*_MeanFitness.mat'<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*_CellNumber.mat'<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.mat'<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*_Parameters.mat' 
 
 #### Example
 
@@ -59,7 +58,7 @@ x_ini = random('Normal',0,0.2, [lineage,1]);   % a vector of the fitness of each
 noise_option = 1;   % cell growth noise is simulated
 
 % Execute
-[ test.simple.csv ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, x_ini, noise_option);
+[ TestSimplified_csv ] = evolution_0mut_simplified(lineage, t_evo, cell_num_ini, x_ini, noise_option);
 ```
 
 ### Complex Simulations 
@@ -67,50 +66,41 @@ noise_option = 1;   % cell growth noise is simulated
 Models competative pooled growth of a population of genotypes with different fitnesses. This simulation may include many sources of noise, including growth noise, noise from cell transfers, DNA extraction, PCR, and sequencing.
 
 #### INPUTS
- 
- -- lineage: number of genotypes of the population
 
- -- t_evo: total number of generations grown 
++ lineage: number of genotypes of the population
 
- -- cell_num_ini: a vector of the initial cell number of each genotype at generation 0, size = lineage * 1
++ t_evo: total number of generations grown
 
- -- x_ini: a vector of the fitness of each genotype, size = lineage * 1
++ cell_num_ini: a vector of the initial cell number of each genotype at generation 0, size = lineage * 1
 
- -- deltat: number of generations between two successive cell transfers
++ x_ini: a vector of the fitness of each genotype, size = lineage * 1
 
- -- read_depth_average: average number of reads per genotype per sequencing time point
++ deltat: number of generations between two successive cell transfers
 
--- cell_num_ini: a vector of the initial cell number of every genotype at the generation 0, size = lineage * 1
++ read_depth_average: average number of reads per genotype per sequencing time point
 
- -- x_ini: a vector of the fitness of every genotype, size = lineage * 1
-
- -- noise_option: a vector of whether five types of noise are simulated (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing), size = 1*5 logical (0-1) vector,   
-                  1 for the first element means that the cell growth noise is included  
-                  0 for the first element means that the cell growth noise is not included  
-                  1 for the second position means that the bottleneck transfer noise is included  
-                  0 for the second position means that the bottleneck transfer noise is not included  
-                  1 for the third element means that the DNA extraction noise is included  
-                  0 for the third element means that the DNA extraction noise is not included  
-                  1 for the fourth position means that the PCR noise is included  
-                  0 for the fourth position means that the PCR is not included  
-                  1 for the fifth element means that the sequencing noise is included  
-                  0 for the fifth element means that the sequencing noise is not included  
-
- -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
++ noise_option: a vector of whether five types of noise are simulated (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing), size = 1*5 logical (0-1) vector,
+    - 1 or 0 at the 1st position represents the cell growth noise is included or not
+    - 1 or 0 at the 2nd position represents the bottleneck cell transfer noise is included or not
+    - 1 or 0 at the 3rd position represents the DNA extraction noise is included or not
+    - 1 or 0 at the 4th position represents the PCR noise is included or not
+    - 1 or 0 at the 5th position represents the sequencing noise is included or not
+    
++  'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
 
 #### OUTPUTS
 
- -- file_name: the name of the file(s) written by the function  
-               When 'format' is set to 'mat', output will be:  
-                  'data_evo_simu_0mut_complex_*Time*.mat'   
-               When 'format' is set to 'csv', output will be:  
-                   'data_evo_simu_0mut_complex_*Time*_MeanFitness.mat'   
-                   'data_evo_simu_0mut_complex_*Time*_CellNumber.mat'   
-                   'data_evo_simu_0mut_complex_*Time*_EffectiveCellDepth.mat'   
-                   'data_evo_simu_0mut_complex_*Time*_Parameters.mat'  
-                   'data_evo_simu_0mut_complex_*Time*_SequencedTimepoints.mat'  
-                   'data_evo_simu_0mut_complex_*Time*_Reads.mat'   
++  file_name: the name of the file(s) written by the function  
+    - When 'format' is set to 'mat', output will be:  
+    - 'data_evo_simu_0mut_complex_*Time*.mat'   
+    - When 'format' is set to 'csv', output will be:  
+    - 'data_evo_simu_0mut_complex_*Time*_MeanFitness.mat'   
+    - 'data_evo_simu_0mut_complex_*Time*_CellNumber.mat'   
+    - 'data_evo_simu_0mut_complex_*Time*_EffectiveCellDepth.mat'   
+    - 'data_evo_simu_0mut_complex_*Time*_Parameters.mat'  
+    - 'data_evo_simu_0mut_complex_*Time*_SequencedTimepoints.mat'  
+    - 'data_evo_simu_0mut_complex_*Time*_Reads.mat'   
                    
                    
 #### Example
@@ -125,7 +115,7 @@ deltat = 8;   % number of generations between two successive cell transfers
 noise_option = [1,1,1,1,1];   % a vector of whether to simulate each of five types of noise (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing). Here, all five types of noise are simulated.
                              
 % Execute
-[ test.complex.csv] = evolution_0mut_complex(lineage, t_evo, cell_num_ini, x_ini, deltat, read_depth_average, noise_option);
+[ TestComplex_csv ] = evolution_0mut_complex(lineage, t_evo, cell_num_ini, x_ini, deltat, read_depth_average, noise_option);
 ```
 
 
@@ -134,44 +124,44 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 
 #### INPUTS
- -- t_seq_vec: a vector of all sequencing time points
++ t_seq_vec: a vector of all sequencing time points
 
- -- BC_num_mat_original: a matrix of read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec) 
++ BC_num_mat_original: a matrix of read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec) 
 
- -- effective_cell_depth: a vector of the effective cell number (number of cells transferred at the bottleneck) of the population at each sequencing time point, size = 1 * length(t_seq_vec)
++ effective_cell_depth: a vector of the effective cell number (number of cells transferred at the bottleneck) of the population at each sequencing time point, size = 1 * length(t_seq_vec)
 
- --  deltat: number of generations between two succesive cell transfers. This is required in addition to t_seq_vec because not every cell transfer is necessarely sequenced (e.g. t_seq_vec = [0, 3, 6, 9, 15])
++ deltat: number of generations between two succesive cell transfers. This is required in addition to t_seq_vec because not every cell transfer is necessarely sequenced (e.g. t_seq_vec = [0, 3, 6, 9, 15])
 
- -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
++ 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
- -- 'kappa': optional, a noise parameter that characterizes the total noise introduced by growth, cell transfer, DNA extraction, PCR, and sequencing, default value is 2.5, from Levy et al. Nature 2015 519, 181-186. To measure kappa empirically, see that reference. 
++ 'kappa': optional, a noise parameter that characterizes the total noise introduced by growth, cell transfer, DNA extraction, PCR, and sequencing, default value is 2.5, from Levy et al. Nature 2015 519, 181-186. To measure kappa empirically, see that reference. 
 
- -- 'opt_cycle': optional, the number of cycles used when using likelihood optimization method to estimate fitness, default value is 2
++ 'opt_cycle': optional, the number of cycles used when using likelihood optimization method to estimate fitness, default value is 2
 
- -- file_name: the name of the file(s) written by the function.  
-               When 'format' is set to 'mat', output will be:  
-                   Fit-Seq_result_*Time*.mat'   
-               When 'format' is set to 'csv', output will be:  
-                   Fit-Seq_result_EstimatedFitness_*Time*.csv'  
-                   Fit-Seq_result_EstimatedReads_*Time*.csv'  
++ file_name: the name of the file(s) written by the function.  
+    - When 'format' is set to 'mat', output will be:  
+    - Fit-Seq_result_*Time*.mat'   
+    - When 'format' is set to 'csv', output will be:  
+    - Fit-Seq_result_EstimatedFitness_*Time*.csv'  
+    - Fit-Seq_result_EstimatedReads_*Time*.csv'  
 
 
 #### OUTPUTS
- -- x_estimate_result: a vector of the estimated fitness of each genotype
++ x_estimate_result: a vector of the estimated fitness of each genotype
 
- -- r_estimate_result: a matrix of the estimated read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec)
++ r_estimate_result: a matrix of the estimated read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec)
 
- -- x_mean_est: a vector of the estimated mean fitness of the population at each sequencing time point, size = 1 * length(t_seq_vec)
++ x_mean_est: a vector of the estimated mean fitness of the population at each sequencing time point, size = 1 * length(t_seq_vec)
 
 
 #### Inputting data from simulation
 
 ```
-t_seq_vec = csvread([test.complex.csv, '_SeuqencedTimepoints.csv']);   % a vector of all sequencing time points
-BC_num_mat_original = csvread([test.complex.csv, '_Reads.csv']);   % a matrix of the read number of each genotype at each sequencing time point
-effective_cell_depth = csvread([test.complex.csv, '_EffectiveCellDepth.csv');   % a vector of the effective cell number (number of cells transferred at the bottleneck) of population at each sequencing time point
-deltat_temp = textscan(fopen([test.complex.csv, '_Paramaters.csv']),'%*f %*f %*f %*f %f %*f %*s','Delimiter',',','headerLines', 1);
-deltat = deltat_temp{1}(1);   % number of generations between two succesive cell transfers
+t_seq_vec = csvread([TestComplex_csv(1:end-4), '_SeuqencedTimepoints.csv']);   % a vector of all sequencing time points
+BC_num_mat_original = csvread([TestComplex_csv(1:end-4), '_Reads.csv']);   % a matrix of the read number of each genotype at each sequencing time point
+effective_cell_depth = csvread([TestComplex_csv(1:end-4), '_EffectiveCellDepth.csv']);   % a vector of the effective cell number (number of cells transferred at the bottleneck) of population at each sequencing time point
+deltat_temp = textscan(fopen([TestComplex_csv(1:end-4), '_Paramaters.csv']),'%*f %*f %*f %*f %f %*f %*s','Delimiter',',','headerLines', 1);
+deltat = deltat_temp{1}(1);   % number of generations between succesive cell transfers
 ```
 
 
