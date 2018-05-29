@@ -165,7 +165,7 @@ deltat = deltat_temp{1}(1);   % number of generations between succesive cell tra
 ```
 
 
-#### Inputting data from a file (Simulated-Pooled_Growth_Reads.csv) 
+#### Inputting data from a file (Simulated-Pooled-Growth_Reads.csv) 
 
 ```
 t_seq_vec = 0:8:24;   % a vector of all sequencing time points
