@@ -145,8 +145,9 @@ Estimates the fitness of each genotype from read-count time-series data.
     - Fit-Seq_result_*Time*.mat'<br/>
     
     When 'format' is set to 'csv', output will be:<br/>
-    - Fit-Seq_result_EstimatedFitness_*Time*.csv'<br/>
-    - Fit-Seq_result_EstimatedReads_*Time*.csv'<br/>
+    - Fit-Seq_result_*Time*_EstimatedFitness.csv'<br/>
+    - Fit-Seq_result_*Time*_EstimatedReads.csv'<br/>
+    - Fit-Seq_result_*Time*_EstimatedMeanFitness.csv'<br/>
 
 
 #### OUTPUTS
