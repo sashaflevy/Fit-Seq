@@ -173,12 +173,14 @@ dt = datestr(now,'yyyymmdd-HHMMSSFFF');
 switch lower(ouptput_format)
     case {'mat'}
         file_name = ['Fit-Seq_result_' dt '.mat'];
-        save(file_name,'file_name','x_estimate_result','r_estimate_result')
+        save(file_name,'file_name','x_estimate_result','r_estimate_result','x_mean_est')
     case {'csv'}
-        file_name_1 = ['Fit-Seq_result_EstimatedFitness_' dt '.csv'];
-        file_name_2 = ['Fit-Seq_result_EstimatedReads_' dt '.csv'];
-        csvwrite(file_name_1,x_estimate_result)
-        csvwrite(file_name_2,r_estimate_result)
+        file_name_1 = ['Fit-Seq_result_' dt '_EstimatedFitness.csv'];
+        file_name_2 = ['Fit-Seq_result_' dt '_EstimatedReads.csv'];
+        file_name_3 = ['Fit-Seq_result_' dt '_EstimatedMeanFitness.csv'];
+        csvwrite(file_name_1, x_estimate_result)
+        csvwrite(file_name_2, r_estimate_result)
+        csvwrite(file_name_3, x_mean_est)
         file_name = ['Fit-Seq_result_' dt '.csv'];
 end
 end
