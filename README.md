@@ -39,14 +39,15 @@ Models competative pooled growth of a population of genotypes with different fit
 
 #### OUTPUTS
 
-+ file_name: the name of the file(s) written by the function.
-    - When 'format' is set to 'mat', output will be:<br/>
++ file_name: the name of the file(s) written by the function<br/>
+    When 'format' is set to 'mat', output will be:<br/>
     - 'data_evo_simu_0mut_simplified_*Time*.mat'<br/>
-    - When 'format' is set to 'csv', output will be:<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*_MeanFitness.mat'<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*_CellNumber.mat'<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.mat'<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*_Parameters.mat' 
+    
+    When 'format' is set to 'csv', output will be:<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*_MeanFitness.csv'<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*_CellNumber.csv'<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.csv'<br/>
+    - 'data_evo_simu_0mut_simplified_*Time*_Parameters.csv' 
 
 #### Example
 
@@ -80,27 +81,28 @@ Models competative pooled growth of a population of genotypes with different fit
 + read_depth_average: average number of reads per genotype per sequencing time point
 
 + noise_option: a vector of whether five types of noise are simulated (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing), size = 1*5 logical (0-1) vector,
-    - 1 or 0 at the 1st position represents the cell growth noise is included or not
-    - 1 or 0 at the 2nd position represents the bottleneck cell transfer noise is included or not
-    - 1 or 0 at the 3rd position represents the DNA extraction noise is included or not
-    - 1 or 0 at the 4th position represents the PCR noise is included or not
-    - 1 or 0 at the 5th position represents the sequencing noise is included or not
+    - 1 or 0 at the 1st position determines if the cell growth noise is included or not
+    - 1 or 0 at the 2nd position determines if the bottleneck cell transfer noise is included or not
+    - 1 or 0 at the 3rd position determines if the DNA extraction noise is included or not
+    - 1 or 0 at the 4th position determines if the PCR noise is included or not
+    - 1 or 0 at the 5th position determines if the sequencing noise is included or not
     
 +  'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
 
 #### OUTPUTS
 
-+  file_name: the name of the file(s) written by the function  
-    - When 'format' is set to 'mat', output will be:  
-    - 'data_evo_simu_0mut_complex_*Time*.mat'   
-    - When 'format' is set to 'csv', output will be:  
-    - 'data_evo_simu_0mut_complex_*Time*_MeanFitness.mat'   
-    - 'data_evo_simu_0mut_complex_*Time*_CellNumber.mat'   
-    - 'data_evo_simu_0mut_complex_*Time*_EffectiveCellDepth.mat'   
-    - 'data_evo_simu_0mut_complex_*Time*_Parameters.mat'  
-    - 'data_evo_simu_0mut_complex_*Time*_SequencedTimepoints.mat'  
-    - 'data_evo_simu_0mut_complex_*Time*_Reads.mat'   
++  file_name: the name of the file(s) written by the function<br/>
+    When 'format' is set to 'mat', output will be:<br/>
+    - 'data_evo_simu_0mut_complex_*Time*.mat'<br/>
+    
+    When 'format' is set to 'csv', output will be:<br/> 
+    - 'data_evo_simu_0mut_complex_*Time*_MeanFitness.csv'<br/>
+    - 'data_evo_simu_0mut_complex_*Time*_CellNumber.csv'<br/>
+    - 'data_evo_simu_0mut_complex_*Time*_EffectiveCellDepth.csv'<br/>
+    - 'data_evo_simu_0mut_complex_*Time*_Parameters.csv'<br/>
+    - 'data_evo_simu_0mut_complex_*Time*_SequencedTimepoints.csv'<br/>
+    - 'data_evo_simu_0mut_complex_*Time*_Reads.csv'
                    
                    
 #### Example
@@ -136,14 +138,15 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 + 'kappa': optional, a noise parameter that characterizes the total noise introduced by growth, cell transfer, DNA extraction, PCR, and sequencing, default value is 2.5, from Levy et al. Nature 2015 519, 181-186. To measure kappa empirically, see that reference. 
 
-+ 'opt_cycle': optional, the number of cycles used when using likelihood optimization method to estimate fitness, default value is 2
++ 'opt_cycle': optional, the number of cycles used when using likelihood optimization method to estimate fitness, default value is 2. Increse this cycle number will increase the fitness estimation accuracy, but extend the compute time.
 
-+ file_name: the name of the file(s) written by the function.  
-    - When 'format' is set to 'mat', output will be:  
-    - Fit-Seq_result_*Time*.mat'   
-    - When 'format' is set to 'csv', output will be:  
-    - Fit-Seq_result_EstimatedFitness_*Time*.csv'  
-    - Fit-Seq_result_EstimatedReads_*Time*.csv'  
++ file_name: the name of the file(s) written by the function <br/>
+    When 'format' is set to 'mat', output will be:<br/>
+    - Fit-Seq_result_*Time*.mat'<br/>
+    
+    When 'format' is set to 'csv', output will be:<br/>
+    - Fit-Seq_result_EstimatedFitness_*Time*.csv'<br/>
+    - Fit-Seq_result_EstimatedReads_*Time*.csv'<br/>
 
 
 #### OUTPUTS
