@@ -32,19 +32,17 @@ noise_option = [1,1,1,1,1];   % a vector of whether to simulate each of five typ
 % The first is by loading data from simulation at previouse step
 t_seq_vec = csvread([TestComplex_csv(1:end-4), '_SeuqencedTimepoints.csv']);   % a vector of all sequencing time points
 BC_num_mat_original = csvread([TestComplex_csv(1:end-4), '_Reads.csv']);   % a matrix of the read number of each genotype at each sequencing time point
-effective_cell_depth = csvread([TestComplex_csv(1:end-4), '_EffectiveCellDepth.csv']);   % a vector of the effective cell number (number of cells transferred at the bottleneck) of population at each sequencing time point
-deltat_temp = textscan(fopen([TestComplex_csv(1:end-4), '_Paramaters.csv']),'%*f %*f %*f %*f %f %*f %*s','Delimiter',',','headerLines', 1);
-deltat = deltat_temp{1}(1);   % number of generations between succesive cell transfers
+cell_depth = [];   % a matrix: 2*(length(t_seq_vec)-1), the first row of this matrix is the cell number after bottleneck (before growth) and the second row is the cell number before bottleneck (after growth).  
 
 %%
 % The second is by loading'Simulated-Pooled_Growth_Reads.csv' provided
 t_seq_vec = 0:8:24;   % a vector of all sequencing time points
 BC_num_mat_original = csvread('Simulated-Pooled-Growth_Reads.csv');   % a matrix of read number of each genotype at each sequencing time point,
-effective_cell_depth = [1000000, 999300, 999040, 999350];   % a vector of the effective cell number (number of cells transferred at the bottleneck) of population at each sequencing time point
-deltat = 8;   % number of generations between succesive cell transfers
+cell_depth = [];  % a matrix: 2*(length(t_seq_vec)-1), the first row of this matrix is the cell number after bottleneck (before growth) and the second row is the cell number before bottleneck (after growth).  
+
 
 %%
 % Execute
 [file_name, x_estimate_result, r_estimate_result, x_mean_est] =  ...
-    FitSeq(t_seq_vec, BC_num_mat_original, effective_cell_depth, deltat,'format','mat');
+    FitSeq(BC_num_mat_original, t_seq_vec, cell_depth, 'format','mat');
 
