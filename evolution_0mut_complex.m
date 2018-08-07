@@ -24,28 +24,16 @@ function [ file_name ] = evolution_0mut_complex(lineage, t_evo, ...
 %
 % -- read_depth_average: average number of reads per genotype per
 %                        sequencing time point
-
-% -- cell_num_ini: a vector of the initial cell number of every genotype at the
-%                  generation 0,
-%                  size = lineage * 1
-%
-% -- x_ini: a vector of the fitness of every genotype,
-%           size = lineage * 1
 %
 % -- noise_option: a vector of whether five types of noise are simulated
 %                  (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing)
 %                  size = 1*5 logical (0-1) vector,
-%                  1 for the first element means that the cell growth noise is included
-%                  0 for the first element means that the cell growth noise is not included
-%                  1 for the second position means that the bottleneck transfer noise is included
-%                  0 for the second position means that the bottleneck transfer noise is not included
-%                  1 for the third element means that the DNA extraction noise is included
-%                  0 for the third element means that the DNA extraction noise is not included
-%                  1 for the fourth position means that the PCR noise is included
-%                  0 for the fourth position means that the PCR is not included
-%                  1 for the fifth element means that the sequencing noise is included
-%                  0 for the fifth element means that the sequencing noise is not included
-%
+%                  1 or 0 at the 1st position determines if the cell growth noise is included or not
+%                  1 or 0 at the 2nd position determines if the bottleneck cell transfer noise is included or not
+%                  1 or 0 at the 3rd position determines if the DNA extraction noise is included or not
+%                  1 or 0 at the 4th position determines if the PCR noise is included or not
+%                  1 or 0 at the 5th position determines if the sequencing noise is included or not
+
 % -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 %
 % -- 'gDNA_copy': optional, average copy number of genome DNA per genotype
