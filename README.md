@@ -80,6 +80,8 @@ Models competative pooled growth of a population of genotypes with different fit
 
 + read_depth_average: average number of reads per genotype per sequencing time point
 
+
+
 + noise_option: a vector of whether five types of noise are simulated (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing), size = 1*5 logical (0-1) vector,
     - 1 or 0 at the 1st position determines if the cell growth noise is included or not
     - 1 or 0 at the 2nd position determines if the bottleneck cell transfer noise is included or not
@@ -88,6 +90,10 @@ Models competative pooled growth of a population of genotypes with different fit
     - 1 or 0 at the 5th position determines if the sequencing noise is included or not
     
 +  'format': optional, file format of the output file, 'csv'(default) or 'mat'
+
++ 'gDNA_copy': optional, average copy number of genome DNA per genotype as template in PCR, default value is 500
+
++ 'PCR_cycle',optional, number of cycles in PCR, default value is 25
 
 
 #### OUTPUTS
