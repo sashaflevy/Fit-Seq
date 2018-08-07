@@ -126,19 +126,18 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 
 #### INPUTS
-+ t_seq_vec: a vector of all sequencing time points
-
 + BC_num_mat_original: a matrix of read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec) 
 
-+ effective_cell_depth: a vector of the effective cell number (number of cells transferred at the bottleneck) of the population at each sequencing time point, size = 1 * length(t_seq_vec)
++ t_seq_vec: a vector of all sequencing time points 
 
-+ deltat: number of generations between two succesive cell transfers. This is required in addition to t_seq_vec because not every cell transfer is necessarely sequenced (e.g. t_seq_vec = [0, 3, 6, 9, 15])
++ cell_depth: a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row), size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown.
 
 + 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
 + 'kappa': optional, a noise parameter that characterizes the total noise introduced by growth, cell transfer, DNA extraction, PCR, and sequencing, default value is 2.5, from Levy et al. Nature 2015 519, 181-186. To measure kappa empirically, see that reference. 
 
-+ 'opt_cycle': optional, the number of cycles used when using likelihood optimization method to estimate fitness, default value is 2. Increse this cycle number will increase the fitness estimation accuracy, but extend the compute time.
+
++ 'opt_cycle_max': optional, maximum number of cycles used when using likelihood optimization method to estimate fitness, default value is 10. Increse this cycle number might increase the fitness estimation accuracy, but extend the compute time.
 
 + file_name: the name of the file(s) written by the function <br/>
     When 'format' is set to 'mat', output will be:<br/>
@@ -163,9 +162,7 @@ Estimates the fitness of each genotype from read-count time-series data.
 ```
 t_seq_vec = csvread([TestComplex_csv(1:end-4), '_SeuqencedTimepoints.csv']);   % a vector of all sequencing time points
 BC_num_mat_original = csvread([TestComplex_csv(1:end-4), '_Reads.csv']);   % a matrix of the read number of each genotype at each sequencing time point
-effective_cell_depth = csvread([TestComplex_csv(1:end-4), '_EffectiveCellDepth.csv']);   % a vector of the effective cell number (number of cells transferred at the bottleneck) of population at each sequencing time point
-deltat_temp = textscan(fopen([TestComplex_csv(1:end-4), '_Paramaters.csv']),'%*f %*f %*f %*f %f %*f %*s','Delimiter',',','headerLines', 1);
-deltat = deltat_temp{1}(1);   % number of generations between succesive cell transfers
+cell_depth = [];   % a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row), size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown
 ```
 
 
@@ -174,11 +171,10 @@ deltat = deltat_temp{1}(1);   % number of generations between succesive cell tra
 ```
 t_seq_vec = 0:8:24;   % a vector of all sequencing time points
 BC_num_mat_original = csvread('Simulated-Pooled-Growth_Reads.csv');   % a matrix of read number of each genotype at each sequencing time point
-effective_cell_depth = [1000000, 999300, 999040, 999350];   % a vector of the effective cell number (number of cells transferred at the bottleneck) of population at each sequencing time point
-deltat = 8;   % number of generations between two succesive cell transfers
+cell_depth = [];   % a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row), size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown.
 ```
 
 #### Running Fit-Seq
 ```
-[file_name, x_estimate_result, r_estimate_result, x_mean_est] =  FitSeq(t_seq_vec, BC_num_mat_original, effective_cell_depth, deltat,'format','mat');
+[file_name, x_estimate_result, r_estimate_result, x_mean_est] =  FitSeq(BC_num_mat_original, t_seq_vec, cell_depth,'format','mat');
 ```
