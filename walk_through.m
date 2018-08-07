@@ -32,14 +32,13 @@ noise_option = [1,1,1,1,1];   % a vector of whether to simulate each of five typ
 % The first is by loading data from simulation at previouse step
 t_seq_vec = csvread([TestComplex_csv(1:end-4), '_SeuqencedTimepoints.csv']);   % a vector of all sequencing time points
 BC_num_mat_original = csvread([TestComplex_csv(1:end-4), '_Reads.csv']);   % a matrix of the read number of each genotype at each sequencing time point
-cell_depth = [];   % a matrix: 2*(length(t_seq_vec)-1), the first row of this matrix is the cell number after bottleneck (before growth) and the second row is the cell number before bottleneck (after growth).  
+cell_depth = [];   % a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row). size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown.
 
 %%
 % The second is by loading'Simulated-Pooled_Growth_Reads.csv' provided
 t_seq_vec = 0:8:24;   % a vector of all sequencing time points
 BC_num_mat_original = csvread('Simulated-Pooled-Growth_Reads.csv');   % a matrix of read number of each genotype at each sequencing time point,
-cell_depth = [];  % a matrix: 2*(length(t_seq_vec)-1), the first row of this matrix is the cell number after bottleneck (before growth) and the second row is the cell number before bottleneck (after growth).  
-
+cell_depth = [];  % a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row). size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown.
 
 %%
 % Execute
