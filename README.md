@@ -132,27 +132,26 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 
 #### INPUTS
-+ BC_num_mat_original: a matrix of read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec) 
++ BC_num_mat_original: a matrix of read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec). This is a required input.
 
-+ t_seq_vec: a vector of all sequencing time points 
++ t_seq_vec: a vector of all sequencing time points. Either t_seq_vec or cell_depth is a required input.
 
-+ cell_depth: a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row), size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown.
++ cell_depth: a matrix of the cell number across growth cycles. The first row of this matrix is the cell number after bottleneck (before growth) for each time point. The second row of this matrix is the cell number before bottleneck (after growth). t_seq_vec is calculated from this matrix, and length(t_seq_vec) = size(cell_depth,2) + 1 . If t_seq_vec is also supplied by the user, the t_seq_vec calculated from this matrix will be used instead. 
 
 + 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
 + 'kappa': optional, a noise parameter that characterizes the total noise introduced by growth, cell transfer, DNA extraction, PCR, and sequencing, default value is 2.5, from Levy et al. Nature 2015 519, 181-186. To measure kappa empirically, see that reference. 
 
-
 + 'opt_cycle_max': optional, maximum number of cycles used when using likelihood optimization method to estimate fitness, default value is 10. Increse this cycle number might increase the fitness estimation accuracy, but extend the compute time.
 
-+ file_name: the name of the file(s) written by the function <br/>
++ file_name: optional, the name of the file(s) written by the function <br/>
     When 'format' is set to 'mat', output will be:<br/>
-    - Fit-Seq_result_*Time*.mat'<br/>
+    - *file_name*_Fit-Seq_result_*Time*.mat'<br/>
     
     When 'format' is set to 'csv', output will be:<br/>
-    - Fit-Seq_result_*Time*_EstimatedFitness.csv'<br/>
-    - Fit-Seq_result_*Time*_EstimatedReads.csv'<br/>
-    - Fit-Seq_result_*Time*_EstimatedMeanFitness.csv'<br/>
+    - *file_name*_Fit-Seq_result_*Time*_EstimatedFitness.csv'<br/>
+    - *file_name*_Fit-Seq_result_*Time*_EstimatedReads.csv'<br/>
+    - *file_name*_Fit-Seq_result_*Time*_EstimatedMeanFitness.csv'<br/>
 
 
 #### OUTPUTS
