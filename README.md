@@ -80,8 +80,6 @@ Models competative pooled growth of a population of genotypes with different fit
 
 + read_depth_average: average number of reads per genotype per sequencing time point
 
-
-
 + noise_option: a vector of whether five types of noise are simulated (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing), size = 1*5 logical (0-1) vector,
     - 1 or 0 at the 1st position determines if the cell growth noise is included or not
     - 1 or 0 at the 2nd position determines if the bottleneck cell transfer noise is included or not
@@ -132,11 +130,19 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 
 #### INPUTS
-+ BC_num_mat_original: a matrix of read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec). This is a required input.
++ BC_num_mat_original: a matrix of read number of each genotype at each sequencing time point, size = number of genotypes * length(t_seq_vec). This is a required input.
 
-+ t_seq_vec: a vector of all sequencing time points. Either t_seq_vec or cell_depth is a required input.
++ t_seq_vec: a vector of all sequencing time points. Either t_seq_vec or cell_depth is a required input. Use [] as input if it is unknown. 
 
-+ cell_depth: a matrix of the cell number across growth cycles. The first row of this matrix is the cell number after bottleneck (before growth) for each time point. The second row of this matrix is the cell number before bottleneck (after growth). t_seq_vec is calculated from this matrix, and length(t_seq_vec) = size(cell_depth,2) + 1 . If t_seq_vec is also supplied by the user, the t_seq_vec calculated from this matrix will be used instead. 
++ cell_depth: a matrix of the cell number across growth cycles. The first row of this matrix is the cell number after bottleneck (before growth) for each time point. The second row of this matrix is the cell number before bottleneck (after growth). t_seq_vec is calculated from this matrix, and length(t_seq_vec) = size(cell_depth,2) + 1 . If t_seq_vec is also supplied by the user, the t_seq_vec calculated from this matrix will be used instead. Use [] as input if it is unknown.
+
++ file_name: the name of the file(s) written by the function. Use [] as input if it is not given.<br/>
+    When 'format' is set to 'mat', output will be:<br/>
+    - *file_name*_Fit-Seq_result_*Time*.mat'<br/>
+
+    When 'format' is set to 'csv', output will be:<br/>
+    - *file_name*_Fit-Seq_result_EstimatedFitness_*Time*.csv'<br/>
+    - *file_name*_Fit-Seq_result_EstimatedReads_*Time*.csv'<br/>
 
 + 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
@@ -144,22 +150,13 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 + 'opt_cycle_max': optional, maximum number of cycles used when using likelihood optimization method to estimate fitness, default value is 10. Increse this cycle number might increase the fitness estimation accuracy, but extend the compute time.
 
-+ file_name: optional, the name of the file(s) written by the function <br/>
-    When 'format' is set to 'mat', output will be:<br/>
-    - *file_name*_Fit-Seq_result_*Time*.mat'<br/>
-    
-    When 'format' is set to 'csv', output will be:<br/>
-    - *file_name*_Fit-Seq_result_*Time*_EstimatedFitness.csv'<br/>
-    - *file_name*_Fit-Seq_result_*Time*_EstimatedReads.csv'<br/>
-    - *file_name*_Fit-Seq_result_*Time*_EstimatedMeanFitness.csv'<br/>
-
 
 #### OUTPUTS
 + x_estimate_result: a vector of the estimated fitness of each genotype
 
-+ r_estimate_result: a matrix of the estimated read number of each genotype at each sequencing time point, size = genotypes * length(t_seq_vec)
++ r_estimate_result: a matrix of the estimated read number of each genotype at each sequencing time point, size = number of genotypes * length(t_seq_vec)
 
-+ x_mean_est: a vector of the estimated mean fitness of the population at each sequencing time point, size = 1 * length(t_seq_vec)
++ x_mean_estimate_result: a vector of the estimated mean fitness of the population at each sequencing time point, size = 1 * length(t_seq_vec)
 
 
 #### Inputting data from simulation
@@ -168,6 +165,7 @@ Estimates the fitness of each genotype from read-count time-series data.
 t_seq_vec = csvread([TestComplex_csv(1:end-4), '_SeuqencedTimepoints.csv']);   % a vector of all sequencing time points
 BC_num_mat_original = csvread([TestComplex_csv(1:end-4), '_Reads.csv']);   % a matrix of the read number of each genotype at each sequencing time point
 cell_depth = [];   % a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row), size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown
+file_name = 'Test';
 ```
 
 
@@ -177,9 +175,10 @@ cell_depth = [];   % a matrix of the cell number after bottleneck (before growth
 t_seq_vec = 0:8:24;   % a vector of all sequencing time points
 BC_num_mat_original = csvread('Simulated-Pooled-Growth_Reads.csv');   % a matrix of read number of each genotype at each sequencing time point
 cell_depth = [];   % a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row), size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown.
+file_name = 'Test';
 ```
 
 #### Running Fit-Seq
 ```
-[file_name, x_estimate_result, r_estimate_result, x_mean_est] =  FitSeq(BC_num_mat_original, t_seq_vec, cell_depth,'format','mat');
+[x_estimate_result, r_estimate_result, x_mean_estimate_result] =  FitSeq(BC_num_mat_original, t_seq_vec, cell_depth, file_name, 'format','mat');
 ```
