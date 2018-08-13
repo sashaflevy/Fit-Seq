@@ -141,7 +141,7 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 + cell_depth: a matrix of the cell number across growth cycles. The first row of this matrix is the cell number after bottleneck (before growth) for each time point. The second row of this matrix is the cell number before bottleneck (after growth). t_seq_vec is calculated from this matrix, and length(t_seq_vec) = size(cell_depth,2) + 1 . If t_seq_vec is also supplied by the user, the t_seq_vec calculated from this matrix will be used instead. Use [] as input if it is unknown.
 
-+ file_name: the name of the file(s) written by the function. Use [] as input if it is not given.<br/>
++ file_name: the name of the prefix of file(s) written by the function. Using [] as input will not include a prefix. <br/>
     When 'format' is set to 'mat', output will be:<br/>
     - *file_name*_Fit-Seq_result_*Time*.mat'<br/>
 
