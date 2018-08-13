@@ -2,7 +2,7 @@
 
 ## What is Fit-Seq?
 
-Fit-Seq is a MATLAB-based fitness estimation tool for pooled amplicon sequencing studies. Fit-Seq is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. We include a version of Fit-Seq that can be run using the freely-available GNU Octove environment (https://www.gnu.org/software/octave/). These scripts are placed in the "GNU Octave Compatible" folder and can not be run in MATLAB. Five packages (io, nan, struct, statistics, and optim) are required to run GNU Octave compatible Fit-Seq. Computaitonal performace is severely compromised with GNU Octave relative MATLAB. We therefore recommend limiting the use of GNU Octave to small genotype libraries (<1000).  
+Fit-Seq is a MATLAB-based fitness estimation tool for pooled amplicon sequencing studies. Fit-Seq is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. It is GNU Octove compatible (https://www.gnu.org/software/octave/). Five packages (io, nan, struct, statistics, and optim) are required to run Fit-Seq on GNU Octave platform. Computaitonal performace is severely compromised with GNU Octave relative MATLAB. We therefore recommend limiting the use of GNU Octave to small genotype libraries (<1000).  
 
 It currently has three main functions:
 1. evolution_0mut_simplified.m performs simplified simulations of competitve pooled growth of a population of genotypes.
@@ -36,6 +36,9 @@ Models competative pooled growth of a population of genotypes with different fit
 + noise_option: options of whether cell growth noise is simulated, logical (0-1) scaler value, 1 means that the cell growth noise is included and 0 means that the cell growth noise is not included  
 
 + 'format': optional, file format of the output file, 'csv'(default) or 'mat'
+
++ 'platform': optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
+
 
 #### OUTPUTS
 
@@ -91,7 +94,9 @@ Models competative pooled growth of a population of genotypes with different fit
 
 + 'gDNA_copy': optional, average copy number of genome DNA per genotype as template in PCR, default value is 500
 
-+ 'PCR_cycle',optional, number of cycles in PCR, default value is 25
++ 'PCR_cycle': optional, number of cycles in PCR, default value is 25
+
++ 'platform': optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
 
 
 #### OUTPUTS
@@ -150,6 +155,8 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 + 'opt_cycle_max': optional, maximum number of cycles used when using likelihood optimization method to estimate fitness, default value is 10. Increse this cycle number might increase the fitness estimation accuracy, but extend the compute time.
 
++ 'platform': optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
+
 
 #### OUTPUTS
 + x_estimate_result: a vector of the estimated fitness of each genotype
@@ -169,16 +176,30 @@ file_name = 'Test';
 ```
 
 
-#### Inputting data from a file (Simulated-Pooled-Growth_Reads.csv) 
+#### Inputting data from a file (Simulated-Pooled-Growth_Reads_10000Genotypes.csv, on MATLAB) 
 
 ```
 t_seq_vec = 0:8:24;   % a vector of all sequencing time points
-BC_num_mat_original = csvread('Simulated-Pooled-Growth_Reads.csv');   % a matrix of read number of each genotype at each sequencing time point
+BC_num_mat_original = csvread('Simulated-Pooled-Growth_Reads_10000Genotypes.csv');   % a matrix of read number of each genotype at each sequencing time point
 cell_depth = [];   % a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row), size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown.
 file_name = 'Test';
 ```
 
-#### Running Fit-Seq
+#### Inputting data from a file (Simulated-Pooled-Growth_Reads_1000Genotypes.csv, GNU Octave) 
+
 ```
-[x_estimate_result, r_estimate_result, x_mean_estimate_result] =  FitSeq(BC_num_mat_original, t_seq_vec, cell_depth, file_name, 'format','mat');
+t_seq_vec = 0:8:24;   % a vector of all sequencing time points
+BC_num_mat_original = csvread('Simulated-Pooled-Growth_Reads_10000enotypes.csv');   % a matrix of read number of each genotype at each sequencing time point
+cell_depth = [];   % a matrix of the cell number after bottleneck (before growth, first row), and the cell number before bottleneck (after growth, second row), size = 2 * (length(t_seq_vec)-1). Use [] as input if it is unknown.
+file_name = 'Test';
+```
+
+#### Running Fit-Seq (on MATLAB)
+```
+[x_estimate_result, r_estimate_result, x_mean_estimate_result] =  FitSeq(BC_num_mat_original, t_seq_vec, cell_depth, file_name);
+```
+
+#### Running Fit-Seq (on GNU Octave)
+```
+[x_estimate_result, r_estimate_result, x_mean_estimate_result] =  FitSeq(BC_num_mat_original, t_seq_vec, cell_depth, file_name, 'platform','OCTAVE');
 ```
