@@ -143,11 +143,11 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 + file_name: the name of the prefix of file(s) written by the function. Using [] as input will not include a prefix. <br/>
     When 'format' is set to 'mat', output will be:<br/>
-    - *file_name*_Fit-Seq_result_*Time*.mat'<br/>
+    - '*file_name*_Fit-Seq_result_*Time*.mat'<br/>
 
     When 'format' is set to 'csv', output will be:<br/>
-    - *file_name*_Fit-Seq_result_EstimatedFitness_*Time*.csv'<br/>
-    - *file_name*_Fit-Seq_result_EstimatedReads_*Time*.csv'<br/>
+    - '*file_name*_Fit-Seq_result_EstimatedFitness_*Time*.csv'<br/>
+    - '*file_name*_Fit-Seq_result_EstimatedReads_*Time*.csv'<br/>
 
 + 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
