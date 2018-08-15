@@ -25,32 +25,32 @@ Models competative pooled growth of a population of genotypes with different fit
 
 #### INPUTS
 
-+ lineage: number of genotypes of the population
++ **lineage**: number of genotypes of the population
 
-+ t_evo: total number of generations grown
++ **t_evo**: total number of generations grown
 
-+ cell_num_ini: a vector of the initial cell number of each genotype at generation 0, size = lineage * 1
++ **cell_num_ini**: a vector of the initial cell number of each genotype at generation 0, size = lineage * 1
 
-+ x_ini: a vector of the fitness of each genotype, size = lineage * 1
++ **x_ini**: a vector of the fitness of each genotype, size = lineage * 1
 
-+ noise_option: options of whether cell growth noise is simulated, logical (0-1) scaler value, 1 means that the cell growth noise is included and 0 means that the cell growth noise is not included  
++ **noise_option**: options of whether cell growth noise is simulated, logical (0-1) scaler value, 1 means that the cell growth noise is included and 0 means that the cell growth noise is not included  
 
-+ 'format': optional, file format of the output file, 'csv'(default) or 'mat'
++ **'format'**: optional, file format of the output file, 'csv'(default) or 'mat'
 
-+ 'platform': optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
++ **'platform'**: optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
 
 
 #### OUTPUTS
 
-+ file_name: the name of the file(s) written by the function<br/>
++ **file_name**: the name of the file(s) written by the function<br/>
     When 'format' is set to 'mat', output will be:<br/>
-    - 'data\_evo\_simu\_0mut\_simplified\_**Time**.mat'<br/>
+    - 'data\_evo\_simu\_0mut\_simplified\__**Time**_.mat'<br/>
     
     When 'format' is set to 'csv', output will be:<br/>
-    - 'data\_evo\_simu\_0mut\_simplified\_**Time**\_MeanFitness.csv'<br/>
-    - 'data\_evo\_simu\_0mut\_simplified\_**Time**\_CellNumber.csv'<br/>
-    - 'data\_evo\_simu\_0mut\_simplified\_**Time**\_EffectiveCellDepth.csv'<br/>
-    - 'data\_evo\_simu\_0mut\_simplified\_**Time**\_Parameters.csv' 
+    - 'data\_evo\_simu\_0mut\_simplified\__**Time**_\_MeanFitness.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_simplified\__**Time**_\_CellNumber.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_simplified\__**Time**_\_EffectiveCellDepth.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_simplified\__**Time**_\_Parameters.csv' 
 
 #### Example
 
@@ -71,47 +71,47 @@ Models competative pooled growth of a population of genotypes with different fit
 
 #### INPUTS
 
-+ lineage: number of genotypes of the population
++ **lineage**: number of genotypes of the population
 
-+ t_evo: total number of generations grown
++ **t_evo**: total number of generations grown
 
-+ cell_num_ini: a vector of the initial cell number of each genotype at generation 0, size = lineage * 1
++ **cell_num_ini**: a vector of the initial cell number of each genotype at generation 0, size = lineage * 1
 
-+ x_ini: a vector of the fitness of each genotype, size = lineage * 1
++ **x_ini**: a vector of the fitness of each genotype, size = lineage * 1
 
-+ deltat: number of generations between two successive cell transfers
++ **deltat**: number of generations between two successive cell transfers
 
-+ read_depth_average: average number of reads per genotype per sequencing time point
++ **read_depth_average**: average number of reads per genotype per sequencing time point
 
-+ noise_option: a vector of whether five types of noise are simulated (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing), size = 1*5 logical (0-1) vector,
++ **noise_option**: a vector of whether five types of noise are simulated (cell growth, bottleneck transfer, DNA extraction, PCR, sequencing), size = 1*5 logical (0-1) vector,
     - 1 or 0 at the 1st position determines if the cell growth noise is included or not
     - 1 or 0 at the 2nd position determines if the bottleneck cell transfer noise is included or not
     - 1 or 0 at the 3rd position determines if the DNA extraction noise is included or not
     - 1 or 0 at the 4th position determines if the PCR noise is included or not
     - 1 or 0 at the 5th position determines if the sequencing noise is included or not
     
-+  'format': optional, file format of the output file, 'csv'(default) or 'mat'
++  **'format'**: optional, file format of the output file, 'csv'(default) or 'mat'
 
-+ 'gDNA_copy': optional, average copy number of genome DNA per genotype as template in PCR, default value is 500
++ **'gDNA_copy'**: optional, average copy number of genome DNA per genotype as template in PCR, default value is 500
 
-+ 'PCR_cycle': optional, number of cycles in PCR, default value is 25
++ **'PCR_cycle'**: optional, number of cycles in PCR, default value is 25
 
-+ 'platform': optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
++ **'platform'**: optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
 
 
 #### OUTPUTS
 
-+  file_name: the name of the file(s) written by the function<br/>
++  **file_name**: the name of the file(s) written by the function<br/>
     When 'format' is set to 'mat', output will be:<br/>
-    - 'data_evo_simu_0mut_complex_*Time*.mat'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\__**Time**_.mat'<br/>
     
     When 'format' is set to 'csv', output will be:<br/> 
-    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_MeanFitness.csv'<br/>
-    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_CellNumber.csv'<br/>
-    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_EffectiveCellDepth.csv'<br/>
-    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_Parameters.csv'<br/>
-    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_SequencedTimepoints.csv'<br/>
-    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_Reads.csv'
+    - 'data\_evo\_simu\_0mut\_complex\__**Time**_\_MeanFitness.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\__**Time**_\_CellNumber.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\__**Time**_\_EffectiveCellDepth.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\__**Time**_\_Parameters.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\__**Time**_\_SequencedTimepoints.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\__**Time**_\_Reads.csv'
                    
                    
 #### Example
@@ -135,35 +135,36 @@ Estimates the fitness of each genotype from read-count time-series data.
 
 
 #### INPUTS
-+ BC_num_mat_original: a matrix of read number of each genotype at each sequencing time point, size = number of genotypes * length(t_seq_vec). This is a required input.
++ **BC_num_mat_original**: a matrix of read number of each genotype at each sequencing time point, size = number of genotypes * length(t_seq_vec). This is a required input.
 
-+ t_seq_vec: a vector of all sequencing time points. Either t_seq_vec or cell_depth is a required input. Use [] as input if it is unknown. 
++ **t_seq_vec**: a vector of all sequencing time points. Either t_seq_vec or cell_depth is a required input. Use [] as input if it is unknown. 
 
-+ cell_depth: a matrix of the cell number across growth cycles. The first row of this matrix is the cell number after bottleneck (before growth) for each time point. The second row of this matrix is the cell number before bottleneck (after growth). t_seq_vec is calculated from this matrix, and length(t_seq_vec) = size(cell_depth,2) + 1 . If t_seq_vec is also supplied by the user, the t_seq_vec calculated from this matrix will be used instead. Use [] as input if it is unknown.
++ **cell_depth**: a matrix of the cell number across growth cycles. The first row of this matrix is the cell number after bottleneck (before growth) for each time point. The second row of this matrix is the cell number before bottleneck (after growth). t_seq_vec is calculated from this matrix, and length(t_seq_vec) = size(cell_depth,2) + 1 . If t_seq_vec is also supplied by the user, the t_seq_vec calculated from this matrix will be used instead. Use [] as input if it is unknown.
 
-+ file_name: the name of the prefix of file(s) written by the function. Using [] as input will not include a prefix. <br/>
++ **file_name**: the name of the prefix of file(s) written by the function. Using [] as input will not include a prefix. <br/>
     When 'format' is set to 'mat', output will be:<br/> 
-    - '**file_name**\_Fit-Seq_result\_**Time**.mat'<br/> 
+    - '_**file_name**_\_Fit-Seq_result\__**Time**_.mat'<br/> 
 
     When 'format' is set to 'csv', output will be:<br/> 
-    - '**file_name**\_Fit-Seq\_result\_EstimatedFitness\_**Time**.csv'<br/> 
-    - '**file_name**\_Fit-Seq\_result\_EstimatedReads\_**Time**.csv'<br/> 
+    - '_**file_name**_\_Fit-Seq\_result\__**Time**_\_EstimatedFitness.csv'<br/> 
+    - '_**file_name**_\_Fit-Seq\_result\__**Time**_\_EstimatedReads.csv'<br/>
+    - '_**file_name**_\_Fit-Seq\_result\__**Time**_\_EstimatedMeanFitness.csv'<br/>
 
-+ 'format': optional, file format of the output file, 'csv'(default) or 'mat'
++ **'format'**: optional, file format of the output file, 'csv'(default) or 'mat'
 
-+ 'kappa': optional, a noise parameter that characterizes the total noise introduced by growth, cell transfer, DNA extraction, PCR, and sequencing, default value is 2.5, from Levy et al. Nature 2015 519, 181-186. To measure kappa empirically, see that reference. 
++ **'kappa'**: optional, a noise parameter that characterizes the total noise introduced by growth, cell transfer, DNA extraction, PCR, and sequencing, default value is 2.5, from Levy et al. Nature 2015 519, 181-186. To measure kappa empirically, see that reference. 
 
-+ 'opt_cycle_max': optional, maximum number of cycles used when using likelihood optimization method to estimate fitness, default value is 10. Increse this cycle number might increase the fitness estimation accuracy, but extend the compute time.
++ **'opt_cycle_max'**: optional, maximum number of cycles used when using likelihood optimization method to estimate fitness, default value is 10. Increse this cycle number might increase the fitness estimation accuracy, but extend the compute time.
 
-+ 'platform': optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
++ **'platform'**: optional, the platform that run Fit-Seq, 'MATLAB (default)' or 'OCTAVE'
 
 
 #### OUTPUTS
-+ x_estimate_result: a vector of the estimated fitness of each genotype
++ **x_estimate_result**: a vector of the estimated fitness of each genotype
 
-+ r_estimate_result: a matrix of the estimated read number of each genotype at each sequencing time point, size = number of genotypes * length(t_seq_vec)
++ **r_estimate_result**: a matrix of the estimated read number of each genotype at each sequencing time point, size = number of genotypes * length(t_seq_vec)
 
-+ x_mean_estimate_result: a vector of the estimated mean fitness of the population at each sequencing time point, size = 1 * length(t_seq_vec)
++ **x_mean_estimate_result**: a vector of the estimated mean fitness of the population at each sequencing time point, size = 1 * length(t_seq_vec)
 
 
 #### Inputting data from simulation
