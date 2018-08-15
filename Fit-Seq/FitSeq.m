@@ -25,13 +25,14 @@ function [ x_estimate_result, r_estimate_result, x_mean_estimate_result ] = ...
 %                calculated from this matrix will be used instead.
 %                Use [] as input if it is unknown.
 %
-% -- file_name: the name of the file(s) written by the function.
+% -- file_name: the name of the prefix of file(s) written by the function. 
+%               Using [] as input will not include a prefix.
 %               When 'format' is set to 'mat', output will be:
 %                   file_name_Fit-Seq_result_*Time*.mat'
 %               When 'format' is set to 'csv', output will be:
-%                   file_name_Fit-Seq_result_EstimatedFitness_*Time*.csv'
-%                   file_name_Fit-Seq_result_EstimatedReads_*Time*.csv'
-%               Use [] as input if it is not given.
+%                   file_name_Fit-Seq_result_*Time*_EstimatedFitness.csv'
+%                   file_name_Fit-Seq_result_*Time*_EstimatedReads.csv'
+%                   file_name_Fit-Seq_result_*Time*_EstimatedMeanFitness.csv'
 %
 % -- 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 %
