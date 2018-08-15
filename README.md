@@ -44,13 +44,13 @@ Models competative pooled growth of a population of genotypes with different fit
 
 + file_name: the name of the file(s) written by the function<br/>
     When 'format' is set to 'mat', output will be:<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*.mat'<br/>
+    - 'data\_evo\_simu\_0mut\_simplified\_**Time**.mat'<br/>
     
     When 'format' is set to 'csv', output will be:<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*_MeanFitness.csv'<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*_CellNumber.csv'<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*_EffectiveCellDepth.csv'<br/>
-    - 'data_evo_simu_0mut_simplified_*Time*_Parameters.csv' 
+    - 'data\_evo\_simu\_0mut\_simplified\_**Time**\_MeanFitness.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_simplified\_**Time**\_CellNumber.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_simplified\_**Time**\_EffectiveCellDepth.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_simplified\_**Time**\_Parameters.csv' 
 
 #### Example
 
@@ -106,12 +106,12 @@ Models competative pooled growth of a population of genotypes with different fit
     - 'data_evo_simu_0mut_complex_*Time*.mat'<br/>
     
     When 'format' is set to 'csv', output will be:<br/> 
-    - 'data_evo_simu_0mut_complex_*Time*_MeanFitness.csv'<br/>
-    - 'data_evo_simu_0mut_complex_*Time*_CellNumber.csv'<br/>
-    - 'data_evo_simu_0mut_complex_*Time*_EffectiveCellDepth.csv'<br/>
-    - 'data_evo_simu_0mut_complex_*Time*_Parameters.csv'<br/>
-    - 'data_evo_simu_0mut_complex_*Time*_SequencedTimepoints.csv'<br/>
-    - 'data_evo_simu_0mut_complex_*Time*_Reads.csv'
+    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_MeanFitness.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_CellNumber.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_EffectiveCellDepth.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_Parameters.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_SequencedTimepoints.csv'<br/>
+    - 'data\_evo\_simu\_0mut\_complex\_**Time**\_Reads.csv'
                    
                    
 #### Example
@@ -142,12 +142,12 @@ Estimates the fitness of each genotype from read-count time-series data.
 + cell_depth: a matrix of the cell number across growth cycles. The first row of this matrix is the cell number after bottleneck (before growth) for each time point. The second row of this matrix is the cell number before bottleneck (after growth). t_seq_vec is calculated from this matrix, and length(t_seq_vec) = size(cell_depth,2) + 1 . If t_seq_vec is also supplied by the user, the t_seq_vec calculated from this matrix will be used instead. Use [] as input if it is unknown.
 
 + file_name: the name of the prefix of file(s) written by the function. Using [] as input will not include a prefix. <br/>
-    When 'format' is set to 'mat', output will be:<br/>
-    - '*file_name*_Fit-Seq_result_*Time*.mat'<br/>
+    When 'format' is set to 'mat', output will be:<br/> 
+    - '**file_name**\_Fit-Seq_result\_**Time**.mat'<br/> 
 
-    When 'format' is set to 'csv', output will be:<br/>
-    - '*file_name*_Fit-Seq_result_EstimatedFitness_*Time*.csv'<br/>
-    - '*file_name*_Fit-Seq_result_EstimatedReads_*Time*.csv'<br/>
+    When 'format' is set to 'csv', output will be:<br/> 
+    - '**file_name**\_Fit-Seq\_result\_EstimatedFitness\_**Time**.csv'<br/> 
+    - '**file_name**\_Fit-Seq\_result\_EstimatedReads\_**Time**.csv'<br/> 
 
 + 'format': optional, file format of the output file, 'csv'(default) or 'mat'
 
