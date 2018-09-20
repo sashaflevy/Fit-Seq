@@ -360,7 +360,11 @@ end
 dt = datestr(now,'yyyymmdd-HHMMSSFFF');
 switch lower(ouptput_format)
     case {'mat'}
-        file_name_full = [file_name '_Fit-Seq_result_' dt '.mat'];
+        if ~isempty(file_name)
+            file_name_full = [file_name '_Fit-Seq_result_' dt '.mat'];
+        elseif isempty(file_name)
+            file_name_full = ['Fit-Seq_result_' dt '.mat'];
+        end
         switch lower(platform_choice)
             case{'matlab'}
                 save(file_name_full,'x_estimate_result','r_estimate_result',...
@@ -371,9 +375,15 @@ switch lower(ouptput_format)
         end
         
     case {'csv'}
-        file_name_full_1 = [file_name '_Fit-Seq_result_' dt '_EstimatedFitness.csv'];
-        file_name_full_2 = [file_name '_Fit-Seq_result_' dt '_EstimatedReads.csv'];
-        file_name_full_3 = [file_name '_Fit-Seq_result_' dt '_EstimatedMeanFitness.csv'];
+        if ~isempty(file_name)
+            file_name_full_1 = [file_name '_Fit-Seq_result_' dt '_EstimatedFitness.csv'];
+            file_name_full_2 = [file_name '_Fit-Seq_result_' dt '_EstimatedReads.csv'];
+            file_name_full_3 = [file_name '_Fit-Seq_result_' dt '_EstimatedMeanFitness.csv'];
+        elseif isempty(file_name)
+            file_name_full_1 = ['Fit-Seq_result_' dt '_EstimatedFitness.csv'];
+            file_name_full_2 = ['Fit-Seq_result_' dt '_EstimatedReads.csv'];
+            file_name_full_3 = ['Fit-Seq_result_' dt '_EstimatedMeanFitness.csv'];
+        end
         csvwrite(file_name_full_1, x_estimate_result)
         csvwrite(file_name_full_2, r_estimate_result)
         csvwrite(file_name_full_3, x_mean_estimate_result)
