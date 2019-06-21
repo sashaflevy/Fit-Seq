@@ -21,7 +21,7 @@ A walk-through of how to perform each simulation and FitSeq fitness estimates on
 
 ### Simplified Simulations
 
-Models competative pooled growth of a population of genotypes with different fitnesses. This simulation includes only growth noise, but not noise from cell transfers, DNA extraction, PCR, or sequencing.
+Models competetive pooled growth of a population of genotypes with different fitnesses. This simulation includes only growth noise, but not noise from cell transfers, DNA extraction, PCR, or sequencing.
 
 #### INPUTS
 
