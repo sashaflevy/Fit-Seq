@@ -2,7 +2,9 @@
 
 ## What is Fit-Seq?
 
-Fit-Seq is a MATLAB-based fitness estimation tool for pooled amplicon sequencing studies. Fit-Seq is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. It is GNU Octove compatible (https://www.gnu.org/software/octave/). Five packages (io, nan, struct, statistics, and optim) are required to run Fit-Seq on GNU Octave platform. Computaitonal performace is severely compromised with GNU Octave relative MATLAB. We therefore recommend limiting the use of GNU Octave to small genotype libraries (<1000).  
+### New: Due to user demand, we have re-written FitSeq in python (PyFitSeq, https://github.com/FangfeiLi05/PyFitSeq) and will be making further updates to the python version. This repository for the Matlab version will be maintained, however we encourage you to try the python version, which has superior performance. 
+
+Fit-Seq is a MATLAB-based fitness estimation tool for pooled amplicon sequencing studies. Fit-Seq is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. It is GNU Octove compatible (https://www.gnu.org/software/octave/). Five packages (io, nan, struct, statistics, and optim) are required to run Fit-Seq on GNU Octave platform. Computaitonal performace is severely compromised with GNU Octave relative MATLAB. We therefore recommend limiting the use of GNU Octave to small genotype libraries (<1000). 
 
 It currently has three main functions:
 1. evolution_0mut_simplified.m performs simplified simulations of competitve pooled growth of a population of genotypes.
